@@ -17,7 +17,6 @@ export default function Home() {
         <ProjectsHorizontal />
         <About />
         <Stack />
-        <Lab />
         <Contact />
       </main>
       <Footer />

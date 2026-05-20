@@ -11,11 +11,11 @@ export default function About() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center px-6 py-24"
+                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-start px-2 pt-36 pb-24"
             >
                   <div className="grid w-full gap-14 md:grid-cols-[0.9fr_1.1fr]">
                         <div>
-                              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[var(--accent)]">
+                              <p className="mb-1 text-sm uppercase tracking-[0.2em] text-[var(--accent)]">
                                     About
                               </p>
 

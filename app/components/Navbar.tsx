@@ -26,7 +26,7 @@ export default function Navbar() {
       ];
 
       useEffect(() => {
-            const sections = ["works", "about", "stack", "lab", "contact"];
+            const sections = ["works", "about", "stack", "contact"];
 
             const handleScroll = () => {
                   const scrollY = window.scrollY + window.innerHeight * 0.45;
@@ -224,7 +224,6 @@ export default function Navbar() {
                         <div className="hidden items-center gap-8 text-[15px] uppercase tracking-[0.18em] md:flex">
                               {navItem("works", t.nav.works)}
                               {navItem("about", t.nav.about)}
-                              {navItem("lab", t.nav.lab)}
                               {navItem("contact", t.nav.contact)}
 
                               <span className="text-white/20">|</span>
@@ -255,7 +254,6 @@ export default function Navbar() {
                                     <div className="flex flex-col gap-4 px-6 py-6 text-slate-300">
                                           {navItem("works", t.nav.works)}
                                           {navItem("about", t.nav.about)}
-                                          {navItem("lab", t.nav.lab)}
                                           {navItem("contact", t.nav.contact)}
 
                                           <div className="my-2 h-px w-full bg-white/10" />

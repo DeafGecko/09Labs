@@ -12,9 +12,9 @@ export default function Contact() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center px-6 pt-20"
+                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-start px-6 pt-16 pb-24"
             >
-                  <div className="grid w-full gap-16 md:grid-cols-2">
+                  <div className="grid w-full gap-16 md:grid-cols-2 mt-4">
 
                         {/* LEFT COLUMN */}
                         <div className="flex flex-col justify-center">
@@ -35,17 +35,18 @@ export default function Contact() {
 
                               <div className="space-y-4 text-white/70">
                                     <div>
-                                          <p className="text-sm uppercase tracking-wider text-[var(--accent)]">
+                                          <p className="text-sm uppercase tracking-wider text-(--accent)">
                                                 Focus
                                           </p>
 
+                                          {/* UPDATED: Added Astro smoothly to your core tech stack line */}
                                           <p className="mt-1">
-                                                React • Next.js • Tailwind • Framer Motion
+                                                React • Next.js • Astro • Tailwind • Framer Motion
                                           </p>
                                     </div>
 
                                     <div>
-                                          <p className="text-sm uppercase tracking-wider text-[var(--accent)]">
+                                          <p className="text-sm uppercase tracking-wider text-(--accent)">
                                                 Current Goal
                                           </p>
 
@@ -58,7 +59,7 @@ export default function Contact() {
                         </div>
 
                         {/* RIGHT COLUMN */}
-                        <div className="rounded-3xl border border-white/20 bg-[rgba(18,18,18,0.72)] p-8 backdrop-blur-sm">
+                        <div className="rounded-3xl border border-white/20 bg-[rgba(28,28,28,0.82) ] p-8 backdrop-blur-sm">
                               <ContactForm />
                         </div>
 

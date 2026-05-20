@@ -17,12 +17,12 @@ export default function Lab() {
                   variants={sectionVariants}
                   initial="hidden"
                   whileInView="show"
-                  viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center px-6 pt-20"
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="snap-start mx-auto flex h-auto max-w-6xl items-start px-6 pt-12 pb-24"
             >
                   <div className="w-full">
                         {/* HEADER */}
-                        <div className="mb-14 max-w-3xl">
+                        <div className="mb-10 max-w-3xl">
                               <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[var(--accent)]">
                                     Experimental Lab
                               </p>
@@ -31,7 +31,7 @@ export default function Lab() {
                                     Building interfaces, motion systems, and interactive frontend ideas.
                               </h2>
 
-                              <p className="mt-6 text-lg leading-relaxed text-slate-400">
+                              <p className="mt-4 text-lg leading-relaxed text-slate-400">
                                     A collection of experimental concepts focused on interaction,
                                     animation, layout systems, cinematic motion, and modern frontend
                                     engineering.

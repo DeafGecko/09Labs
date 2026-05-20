@@ -32,7 +32,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-4 text-sm uppercase tracking-[0.2em] text-[var(--accent)]"
+          className="mb-4 text-sm uppercase tracking-[0.2em] text-(--accent)"
         >
           Dwight Rogers | DeafGecko
         </motion.p>
@@ -70,11 +70,12 @@ export default function Hero() {
           transition={{ delay: 0.4 }}
           className="mt-10 flex flex-wrap items-center gap-5"
         >
+          {/* FIX: Changed bg to use var(--accent) to guarantee an exact color match, and swapped hover to brightness shifting */}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => scrollToId("projects")}
-            className="rounded-xl bg-[var(--accent-strong)] px-7 py-4 font-medium text-white transition-all duration-300 hover:bg-orange-500"
+            onClick={() => scrollToId("works")}
+            className="rounded-xl bg-(--accent) px-7 py-4 font-medium text-white transition-all duration-300 hover:brightness-110"
           >
             View Works
           </motion.button>
@@ -83,7 +84,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => scrollToId("contact")}
-            className="rounded-xl border border-[var(--border)] bg-[rgba(18,18,18,0.72)] px-7 py-4 font-medium text-white transition-all duration-300 hover:border-[var(--accent)]"
+            className="rounded-xl border border-(--border) bg-[rgba(18,18,18,0.72)] px-7 py-4 font-medium text-white transition-all duration-300 hover:border-(--accent)"
           >
             Contact Me
           </motion.button>
@@ -94,6 +95,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all duration-300 hover:text-white"
+              aria-label="GitHub Profile"
             >
               <FaGithub size={24} />
             </a>
@@ -103,6 +105,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               className="transition-all duration-300 hover:text-blue-400"
+              aria-label="LinkedIn Profile"
             >
               <FaLinkedin size={24} />
             </a>

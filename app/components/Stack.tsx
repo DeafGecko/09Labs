@@ -16,10 +16,12 @@ const stackGroups = [
             items: [
                   "React",
                   "Next.js",
+                  "Astro",
                   "TypeScript",
                   "JavaScript",
                   "Tailwind CSS",
             ],
+            desc: "The core tools I use to build fast, interactive websites and smooth user screens.",
       },
 
       {
@@ -60,7 +62,7 @@ export default function Stack() {
                   <div className="w-full">
                         {/* HEADER */}
                         <div className="mb-14 max-w-3xl">
-                              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[var(--accent)]">
+                              <p className="mb-3 text-sm uppercase tracking-[0.2em] text-(--accent)">
                                     Stack
                               </p>
 
@@ -88,16 +90,16 @@ export default function Stack() {
                                                       boxShadow: "0 0 30px rgba(245,127,0,0.08)",
                                                 }}
                                                 transition={{ duration: 0.25 }}
-                                                className="group relative overflow-hidden rounded-3xl border border-[var(--border)] bg-[rgba(18,18,18,0.72)] p-6 backdrop-blur-xl"
+                                                className="group relative overflow-hidden rounded-3xl border border-(--border) bg-[rgba(18,18,18,0.72)] p-6 backdrop-blur-xl"
                                           >
                                                 {/* GIANT NUMBER */}
-                                                <div className="absolute right-5 top-3 text-8xl font-black text-white/[0.03]">
+                                                <div className="absolute right-5 top-3 text-8xl font-black text-white/3">
                                                       0{index + 1}
                                                 </div>
 
                                                 <div className="mb-6 flex items-center gap-4">
                                                       {/* ICON */}
-                                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[var(--border)] bg-[rgba(28,28,28,0.82)] text-[var(--accent)] transition-all duration-300 group-hover:border-[var(--accent-border)]">
+                                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-(--border) bg-[rgba(28,28,28,0.82)] text-(--accent) transition-all duration-300 group-hover:border-(--accent-border)">
                                                             <Icon size={22} />
                                                       </div>
 
@@ -112,7 +114,7 @@ export default function Stack() {
                                                       {group.items.map((item) => (
                                                             <span
                                                                   key={item}
-                                                                  className="rounded-full border border-[var(--accent-border)] bg-[var(--accent-soft)] px-4 py-2 text-xs text-[var(--accent)]"
+                                                                  className="rounded-full border border-(--accent-border) bg-(--accent-soft) px-4 py-2 text-xs text-(--accent)"
                                                             >
                                                                   {item}
                                                             </span>
