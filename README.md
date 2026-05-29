@@ -1,47 +1,62 @@
-# 09 Labs Portfolio
+# Dwight Rogers — Frontend Developer & Design Engineer
 
-A modern Front-End Engineering portfolio built with Next.js, React, Tailwind CSS, and Framer Motion.
+> Building cinematic, accessible web experiences
+> for the Deaf community and beyond.
 
-## About
+---
 
-This portfolio represents my transition from 10+ years in graphic design into Front-End Engineering. It combines my background in visual design, layout systems, branding, and user experience with modern frontend development.
+## What I Build
 
-My focus is building clean, responsive, interactive web experiences using React, Next.js, animation systems, and scalable UI architecture.
+| Project | Description | Stack | Live |
+|---------|-------------|-------|------|
+| **VANTGE** | Professional event photo platform — host dashboard, real-time gallery, guest uploads | React · Next.js · Supabase | [vantge.app](https://vantge.app) |
+| **VoltFund** | Nonprofit fund management dashboard with audit trail | Astro · TypeScript | [voltfund.09labs.dev](https://voltfund.09labs.dev) |
+| **Kanso** | Distraction-free writing tool with live word count and font system | Vanilla JS | [kanso.09labs.dev](https://kanso.09labs.dev) |
+| **ClearCard** | AI-powered communication tool for the Deaf and Hard of Hearing | React · TypeScript | [clearcard.09labs.dev](https://clearcard.09labs.dev) |
+| **Factory Events** | Event management system — full CRUD | Vanilla JS · Supabase | [factory.09labs.dev](https://factory.09labs.dev) |
+| **SeeAndGone** | Self-destructing message tool — read once, gone forever | React · Supabase | [seeandgone.09labs.dev](https://seeandgone.09labs.dev) |
 
-## Tech Stack
+---
 
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Vercel
+## Stack
 
-## Features
+**Frontend**
+React · Next.js · TypeScript · Tailwind CSS · Astro · Framer Motion
 
-- Responsive navigation
-- Animated mobile menu
-- Scroll spy active navigation
-- Full-screen section layout
-- Scroll snapping
-- Glass-style navbar
-- Section entrance animations
-- Contact form layout
-- Experimental Lab section
+**Backend & Data**
+Supabase · PostgreSQL · MongoDB
 
-## Sections
+**Tools**
+Vite · Vercel · Git · Figma · Cloudinary
 
-- Hero
-- Projects
-- About
-- Lab
-- Contact
+---
 
-## Status
+## Currently
 
-Currently in development. Projects will be upgraded into full case studies later.
+- Building **VANTGE** — shipping beta soon at [vantge.app](https://vantge.app)
+- Completing Codecademy Frontend Engineering certificate
+- Focused on **accessibility** and **Deaf community** tooling
+- Preparing for frontend engineering roles
 
-## Author
+---
 
-Dwight Rogers | DeafGecko 
-Front-End Developer
+## Background
+
+10 years of graphic design experience — now building
+the products I always wanted to design.
+
+Strong focus on **accessibility (A11y)** and building
+tools that work for everyone — including the Deaf,
+hard of hearing, and low vision community.
+
+---
+
+## Find Me
+
+🌐 [09labs.dev](https://09labs.dev)
+📄 [Resume](https://resume.09labs.dev)
+📍 Nashville, TN
+
+---
+
+*"Design is how it works — not just how it looks."*
