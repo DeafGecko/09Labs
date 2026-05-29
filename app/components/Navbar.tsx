@@ -6,24 +6,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LogoWide } from "../lib/Logo.jsx";
 import MenuIcon from "../components/MenuIcon";
 import { scrollToId } from "../lib/helpers";
-import { translations, type Language } from "../lib/translations";
 
 export default function Navbar() {
       const [open, setOpen] = useState(false);
       const [activeSection, setActiveSection] = useState("");
       const [scrolled, setScrolled] = useState(false);
-
-      const [language, setLanguage] = useState<Language>("EN");
-      const [languageOpen, setLanguageOpen] = useState(false);
-
-      const t = translations[language];
-
-      const languages = [
-            { code: "EN", label: "English" },
-            { code: "ZH", label: "Chinese" },
-            { code: "FR", label: "French" },
-            { code: "ES", label: "Spanish" },
-      ];
 
       useEffect(() => {
             const sections = ["works", "about", "stack", "contact"];
@@ -95,6 +82,7 @@ export default function Navbar() {
             const html = document.documentElement;
             const body = document.body;
 
+            // This code is fighting against the browser's normal scroll behavior
             html.style.scrollSnapType = "none";
             body.style.scrollSnapType = "none";
 
@@ -135,9 +123,9 @@ export default function Navbar() {
       const navItem = (id: string, label: string) => (
             <button
                   onClick={() => scrollToSection(id)}
-                  className={`relative transition-colors ${activeSection === id
-                        ? "text-[var(--accent)]"
-                        : "text-slate-300 hover:text-[var(--accent)]"
+                  className={`relative lowercase transition-colors ${activeSection === id
+                              ? "text-[var(--accent)]"
+                              : "text-slate-300 hover:text-[var(--accent)]"
                         }`}
             >
                   {label}
@@ -149,52 +137,16 @@ export default function Navbar() {
             </button>
       );
 
-      const languageDropdown = (
-            <div className="relative">
-                  <button
-                        onClick={() => setLanguageOpen(!languageOpen)}
-                        className="text-sm font-medium tracking-wide text-slate-400 transition-colors hover:text-[var(--accent)]"
-                  >
-                        {language}
-                  </button>
-
-                  <AnimatePresence>
-                        {languageOpen && (
-                              <motion.div
-                                    initial={{ opacity: 0, y: -6 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -6 }}
-                                    transition={{ duration: 0.2 }}
-                                    className="absolute right-0 mt-4 w-40 rounded-2xl border border-[var(--border)] bg-[#080808]/95 p-2 shadow-xl backdrop-blur-xl"
-                              >
-                                    {languages.map((item) => (
-                                          <button
-                                                key={item.code}
-                                                onClick={() => {
-                                                      setLanguage(item.code as Language);
-                                                      setLanguageOpen(false);
-                                                }}
-                                                className="w-full rounded-xl px-3 py-2 text-left text-sm text-slate-300 transition-colors hover:bg-white/5 hover:text-[var(--accent)]"
-                                          >
-                                                {item.label}
-                                          </button>
-                                    ))}
-                              </motion.div>
-                        )}
-                  </AnimatePresence>
-            </div>
-      );
-
       return (
             <motion.nav
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   className={`sticky top-0 z-50 border-b transition-all duration-300 ${scrolled
-                        ? "border-[var(--border)] bg-[#080808]/95 shadow-lg shadow-black/30 backdrop-blur-xl"
-                        : "border-[var(--border)] bg-[#080808]/80 backdrop-blur-md"
+                              ? "border-[var(--border)] bg-[#080808]/95 shadow-lg shadow-black/30 backdrop-blur-xl"
+                              : "border-[var(--border)] bg-[#080808]/80 backdrop-blur-md"
                         }`}
             >
-                  <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+                  <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
                         {/* LOGO */}
                         <div className="flex shrink-0 flex-col leading-tight">
                               <Link
@@ -210,7 +162,7 @@ export default function Navbar() {
                                           setOpen(false);
                                     }}
                               >
-                                    <div className="w-[100px] pb-1">
+                                    <div className="w-[88px] pb-1">
                                           <LogoWide className="h-auto w-full text-[var(--accent)]" />
                                     </div>
                               </Link>
@@ -221,14 +173,11 @@ export default function Navbar() {
                         </div>
 
                         {/* DESKTOP NAV */}
-                        <div className="hidden items-center gap-8 text-[15px] uppercase tracking-[0.18em] md:flex">
-                              {navItem("works", t.nav.works)}
-                              {navItem("about", t.nav.about)}
-                              {navItem("contact", t.nav.contact)}
-
-                              <span className="text-white/20">|</span>
-
-                              {languageDropdown}
+                        <div className="hidden items-center gap-6 text-[14px] tracking-[0.18em] md:flex">
+                              {navItem("works", "works")}
+                              {navItem("about", "about")}
+                              {navItem("stack", "stack")}
+                              {navItem("contact", "contact")}
                         </div>
 
                         {/* MOBILE BUTTON */}
@@ -252,13 +201,10 @@ export default function Navbar() {
                                     className="overflow-hidden border-t border-[var(--border)] bg-[#080808]/95 md:hidden"
                               >
                                     <div className="flex flex-col gap-4 px-6 py-6 text-slate-300">
-                                          {navItem("works", t.nav.works)}
-                                          {navItem("about", t.nav.about)}
-                                          {navItem("contact", t.nav.contact)}
-
-                                          <div className="my-2 h-px w-full bg-white/10" />
-
-                                          {languageDropdown}
+                                          {navItem("works", "works")}
+                                          {navItem("about", "about")}
+                                          {navItem("stack", "stack")}
+                                          {navItem("contact", "contact")}
                                     </div>
                               </motion.div>
                         )}

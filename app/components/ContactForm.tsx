@@ -23,7 +23,7 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="rounded-xl border border-[var(--accent)] bg-transparent p-4 font-medium text-white transition-all duration-300 hover:bg-[var(--accent)]"
+        className="rounded-xl border border-[var(--accent)] bg-transparent p-4 font-bold text-white transition-all duration-300 hover:bg-[var(--accent)]"
       >
         Send Message
       </button>

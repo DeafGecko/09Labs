@@ -49,7 +49,7 @@ export default function Hero() {
             </span>
 
             <span className="block whitespace-nowrap">
-              Creative Technologist
+              Design Engineer
             </span>
           </>
         </motion.h1>
@@ -75,7 +75,7 @@ export default function Hero() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => scrollToId("works")}
-            className="rounded-xl bg-(--accent) px-7 py-4 font-medium text-white transition-all duration-300 hover:brightness-110"
+            className="rounded-xl bg-(--accent) px-7 py-4 font-bold text-white transition-all duration-300 hover:brightness-110"
           >
             View Works
           </motion.button>

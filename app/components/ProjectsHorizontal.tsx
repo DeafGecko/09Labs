@@ -16,8 +16,8 @@ const works = [
             stack: ["Astro", "TypeScript", "Pure CSS", "Accessibility"],
             // STEP 1: Add your asset paths here (e.g., "/images/voltfund.jpg")
             imageSrc: "/images/voltfund.png",
-            liveLink: "https://voltfund.app",
-            repoLink: "https://github.com/DeafGecko/voltfund-console"
+            liveLink: "https://voltfund-platform.vercel.app/",
+            repoLink: "https://github.com/DeafGecko/voltfund-platform"
       },
       {
             title: "ClearCard",
@@ -29,7 +29,7 @@ const works = [
                   "A fast, high-contrast digital card library and a silent chat tool with voice-to-text features. It includes an AI assistant to auto-make cards, and keeps all sensitive user notes completely private on their own device.",
             stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
             imageSrc: "/images/clearcard.png",
-            liveLink: "https://clearcard.netlify.app",
+            liveLink: "https://clearcard.vercel.app/",
             repoLink: "https://github.com/DeafGecko/clearcard"
       },
       {
@@ -42,7 +42,7 @@ const works = [
                   "A super clean, minimalist text editor with custom themes and fonts. It tracks your word goals, works on mobile, and saves files straight to your computer so your writing stays 100% private and fast.",
             stack: ["JavaScript (Vanilla)", "Tailwind CSS", "HTML5", "Vite"],
             imageSrc: "/images/kanso.png",
-            liveLink: "https://kanso-write.app",
+            liveLink: "https://kanso-bay.vercel.app",
             repoLink: "https://github.com/DeafGecko/kanso"
       },
 ];
