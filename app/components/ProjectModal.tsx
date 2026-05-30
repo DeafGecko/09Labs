@@ -2,14 +2,18 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 
-type Project = {
+// Update your interface to include the missing fields
+interface Project {
       title: string;
       desc: string;
       tag: string;
-      problem?: string;
-      solution?: string;
-      stack?: string[];
-};
+      problem: string;
+      solution: string;
+      stack: string[];
+      imageSrc: string;
+      liveLink: string; 
+      repoLink: string; 
+}
 
 type ProjectModalProps = {
       project: Project | null;
