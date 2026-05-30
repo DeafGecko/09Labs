@@ -11,7 +11,7 @@ export default function About() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center px-6 py-24"
+                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center pt-2 px-6 py-24"
             >
                   <div className="grid w-full gap-16 md:grid-cols-[0.9fr_1.1fr]">
                         {/* LEFT */}

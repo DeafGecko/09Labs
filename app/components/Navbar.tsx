@@ -124,14 +124,14 @@ export default function Navbar() {
             <button
                   onClick={() => scrollToSection(id)}
                   className={`relative lowercase transition-colors ${activeSection === id
-                              ? "text-[var(--accent)]"
-                              : "text-slate-300 hover:text-[var(--accent)]"
+                              ? "text-(--accent)"
+                              : "text-slate-300 hover:text-(--accent)"
                         }`}
             >
                   {label}
 
                   <span
-                        className={`absolute left-0 -bottom-1 h-[2px] bg-[var(--accent)] transition-all duration-300 ${activeSection === id ? "w-full" : "w-0"
+                        className={`absolute left-0 -bottom-1 h-0.5 bg-(--accent) transition-all duration-300 ${activeSection === id ? "w-full" : "w-0"
                               }`}
                   />
             </button>
@@ -142,11 +142,11 @@ export default function Navbar() {
                   initial={{ y: -20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   className={`sticky top-0 z-50 border-b transition-all duration-300 ${scrolled
-                              ? "border-[var(--border)] bg-[#080808]/95 shadow-lg shadow-black/30 backdrop-blur-xl"
-                              : "border-[var(--border)] bg-[#080808]/80 backdrop-blur-md"
+                              ? "border-(--border) bg-[#080808]/95 shadow-lg shadow-black/30 backdrop-blur-xl"
+                              : "border-(--border) bg-[#080808]/80 backdrop-blur-md"
                         }`}
             >
-                  <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-5">
+                  <div className="mx-auto flex max-w-6xl items-center justify-between px-8 py-5">
                         {/* LOGO */}
                         <div className="flex shrink-0 flex-col leading-tight">
                               <Link
@@ -154,17 +154,14 @@ export default function Navbar() {
                                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                                     onClick={(e) => {
                                           e.preventDefault();
-
                                           setActiveSection("");
-
                                           scrollToId("hero");
-
                                           setOpen(false);
                                     }}
                               >
-                                    <div className="w-[88px] pb-1">
-                                          <LogoWide className="h-auto w-full text-[var(--accent)]" />
-                                    </div>
+                              <div className="w-22 pb-1">
+                                    <LogoWide className="h-auto w-full" />
+                              </div>
                               </Link>
 
                               <span className="text-[10px] text-slate-200">
@@ -198,7 +195,7 @@ export default function Navbar() {
                                     animate={{ height: "auto", opacity: 1 }}
                                     exit={{ height: 0, opacity: 0 }}
                                     transition={{ duration: 0.3 }}
-                                    className="overflow-hidden border-t border-[var(--border)] bg-[#080808]/95 md:hidden"
+                                    className="overflow-hidden border-t border-(--border) bg-[#080808]/95 md:hidden"
                               >
                                     <div className="flex flex-col gap-4 px-6 py-6 text-slate-300">
                                           {navItem("works", "works")}

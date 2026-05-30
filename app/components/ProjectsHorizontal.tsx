@@ -16,8 +16,8 @@ const works = [
             stack: ["Astro", "TypeScript", "Pure CSS", "Accessibility"],
             // STEP 1: Add your asset paths here (e.g., "/images/voltfund.jpg")
             imageSrc: "/images/voltfund.png",
-            liveLink: "https://voltfund-platform.vercel.app/",
-            repoLink: "https://github.com/DeafGecko/voltfund-platform"
+            liveLink: "https://voltfund.09labs.dev/",
+            repoLink: "https://github.com/DeafGecko/voltfund"
       },
       {
             title: "ClearCard",
@@ -29,7 +29,7 @@ const works = [
                   "A fast, high-contrast digital card library and a silent chat tool with voice-to-text features. It includes an AI assistant to auto-make cards, and keeps all sensitive user notes completely private on their own device.",
             stack: ["React", "TypeScript", "Tailwind CSS", "Vite"],
             imageSrc: "/images/clearcard.png",
-            liveLink: "https://clearcard.vercel.app/",
+            liveLink: "https://clearcard.09labs.dev/",
             repoLink: "https://github.com/DeafGecko/clearcard"
       },
       {
@@ -42,7 +42,7 @@ const works = [
                   "A super clean, minimalist text editor with custom themes and fonts. It tracks your word goals, works on mobile, and saves files straight to your computer so your writing stays 100% private and fast.",
             stack: ["JavaScript (Vanilla)", "Tailwind CSS", "HTML5", "Vite"],
             imageSrc: "/images/kanso.png",
-            liveLink: "https://kanso-bay.vercel.app",
+            liveLink: "https://kanso.09labs.dev",
             repoLink: "https://github.com/DeafGecko/kanso"
       },
 ];
@@ -51,7 +51,6 @@ export default function ProjectsHorizontal() {
       const targetRef = useRef<HTMLElement | null>(null);
       const [selectedProject, setSelectedProject] = useState<(typeof works)[0] | null>(null);
 
-      const [sliderValue, setSliderValue] = useState(0);
       const manualX = useMotionValue(0);
 
       const { scrollYProgress } = useScroll({
@@ -60,17 +59,25 @@ export default function ProjectsHorizontal() {
       });
 
       const scrollX = useTransform(scrollYProgress, [0, 1], [0, -58]);
-      const [combinedX, setCombinedX] = useState<any>("0%");
+      const [combinedX, setCombinedX] = useState<string>("0%");
 
-      useEffect(() => {
-            return scrollX.on("change", (latestScroll) => {
-                  if (latestScroll !== 0) {
-                        setCombinedX(`${latestScroll}%`);
-                        const percentage = Math.min(100, Math.max(0, (latestScroll / -58) * 100));
-                        setSliderValue(percentage);
-                  }
-            });
-      }, [scrollX]);
+useEffect(() => {
+      // 1. Create the subscription and store it in a variable
+      const unsubscribe = scrollX.on("change", (latestScroll) => {
+            if (latestScroll !== 0) {
+                  setCombinedX(`${latestScroll}%`);
+                  
+                  // 2. Logic: Ensure the math is safe (avoid dividing by zero if necessary)
+                  const percentage = Math.min(100, Math.max(0, (latestScroll / -58) * 100));
+                  Number(percentage);
+            }
+      });
+
+      // 3. CLEANUP: This is the missing piece. 
+      // It tells React to remove the listener when the component unmounts.
+      return () => unsubscribe();
+      
+}, [scrollX]);
 
       useEffect(() => {
             return manualX.on("change", (latestManual) => {
@@ -95,12 +102,12 @@ export default function ProjectsHorizontal() {
             };
       }, []);
 
-      const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-            const val = parseFloat(e.target.value);
-            setSliderValue(val);
-            const targetedX = (val / 100) * -58;
-            manualX.set(targetedX);
-      };
+      //const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      //      const val = parseFloat(e.target.value);
+      //      setSliderValue(val);
+      //      const targetedX = (val / 100) * -58;
+      //     manualX.set(targetedX);
+      //}
 
       return (
             <section
@@ -108,20 +115,20 @@ export default function ProjectsHorizontal() {
                   id="works"
                   className="relative h-[300vh] snap-start"
             >
-                  <div className="sticky top-0 flex h-screen flex-col justify-start overflow-hidden pt-16 pb-6">
+                  <div className="sticky top-0 flex h-screen flex-col justify-start overflow-hidden pt-2 pb-24">
 
                         {/* Top Header Section */}
-                        <div className="mx-auto w-full max-w-6xl px-6">
-                              <div className="mb-2 max-w-3xl">
-                                    <p className="mb-2 text-sm uppercase tracking-[0.2em] text-[var(--accent)]">
+                        <div className="mx-auto w-full max-w-6xl mt-4">
+                              <div className="mb-2 max-w-2xl">
+                                    <p className="mb-2 text-sm uppercase tracking-[0.2em] text-(--accent)">
                                           Selected Works
                                     </p>
 
-                                    <h2 className="text-4xl font-black leading-tight text-white md:text-5xl">
+                                    <h2 className="text-4xl font-black leading-tight text-white md:text-5xl whitespace-nowrap">
                                           Interactive frontend systems.
                                     </h2>
 
-                                    <p className="mt-4 text-base leading-relaxed text-white/70">
+                                    <p className="mt-2 text-base leading-relaxed text-white/70">
                                           Scroll through or use the slider below to view case studies.
                                     </p>
                               </div>
@@ -139,15 +146,15 @@ export default function ProjectsHorizontal() {
                                                 onClick={() => setSelectedProject(work)}
                                                 whileHover={{
                                                       y: -8,
-                                                      borderColor: "rgba(245,127,0,0.35)",
-                                                      boxShadow: "0 0 30px rgba(245,127,0,0.08)",
+                                                      borderColor: "rgba(0,191,255,0.7)", // cyan blue
+                                                      boxShadow: "0 0 30px rgba(0,191,255,0.15)", // cyan blue
                                                 }}
                                                 transition={{ duration: 0.25 }}
-                                                className="group flex min-w-[320px] flex-col cursor-pointer rounded-3xl border border-(--border) bg-[rgba(18,18,18,0.72)] p-6 backdrop-blur-xl md:min-w-105"
+                                                className="group flex min-w-[260px] flex-col cursor-pointer rounded-3xl border border-(--border) bg-[rgba(18,18,18,0.72)] p-4 backdrop-blur-xl md:min-w-80"
                                           >
                                                 {/* STEP 2: Swapped 01/02 text out for a premium fluid background image container */}
                                                 <div
-                                                      className="mb-6 flex h-48 items-center justify-center rounded-2xl border border-(--border) bg-[rgba(28,28,28,0.82)] bg-cover bg-center transition-all duration-300 group-hover:opacity-90"
+                                                      className="mb-4 flex h-36 items-center justify-center rounded-2xl border border-(--border) bg-[rgba(28,28,28,0.82)] bg-cover bg-center transition-all duration-300 group-hover:opacity-90"
                                                       style={{ backgroundImage: `url(${work.imageSrc})` }}
                                                 >
                                                       {/* Fallback clean number layout overlay if image string is blank or missing */}
@@ -166,7 +173,7 @@ export default function ProjectsHorizontal() {
                                                       {work.title}
                                                 </h3>
 
-                                                <p className="flex-grow leading-relaxed text-slate-400">
+                                                <p className="grow leading-relaxed text-slate-400">
                                                       {work.desc}
                                                 </p>
 

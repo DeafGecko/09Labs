@@ -12,7 +12,7 @@ export default function Contact() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-start px-6 pt-16 pb-24"
+                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center pt-2 px-6 py-24"
             >
                   <div className="grid w-full gap-16 md:grid-cols-2 mt-4">
 

@@ -6,10 +6,10 @@
   --muted: rgba(255, 255, 255, 0.68);
   --surface: rgba(8, 8, 8, 0.72);
   --surface-strong: rgba(8, 8, 8, 0.92);
-  --border: rgba(120, 120, 120, 0.28);
+  --border: rgba(54, 101, 139, 0.28);
   --accent: #388DF8 ;
-  --accent-strong: #38BDF8;
-  --accent-soft: rgba(56, 141, 248, 0.14);
+  --accent-strong: #388DF8;
+  --accent-soft: rgba(52, 139, 245, 0.14);
   --accent-border: rgba(3, 87, 152, 0.36);
 }
 
@@ -32,4 +32,32 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
+}
+
+@layer utilities {
+  .progress-bar-animate {
+    height: 100%;
+    background-color: var(--accent);
+    transition-property: width;
+    transition-duration: 700ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .project-card-image {
+    margin-bottom: 1.5rem; /* mb-6 */
+    display: flex;
+    height: 12rem; /* h-48 */
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem; /* rounded-2xl */
+    border: 1px solid var(--border);
+    background-color: rgba(28, 28, 28, 0.82);
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.3s ease; /* transition-all duration-300 */
+  }
+
+  .project-card-image:hover {
+    opacity: 0.9; /* group-hover:opacity-90 */
+  }
 }

@@ -30,15 +30,12 @@ export default function ScrollProgress() {
       return (
             <>
                   {/* TOP BAR */}
-                  <div className="fixed left-0 top-0 z-[999999] h-1.5 w-screen bg-white/10">
-                        <div
-                              className="h-full bg-[var(--accent)] transition-[width] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
-                              style={{ width: `${progress}%` }}
-                        />
+                  <div className="fixed left-0 top-0 z-999999 h-1.5 w-screen bg-white/10">
+                        <div className="progress-bar-animate"  style={{ width: `${progress}%` }} />
                   </div>
 
                   {/* PERCENT */}
-                  <div className="fixed top-5 left-5 z-[999999] text-xs font-medium tracking-wide text-white/50">
+                  <div className="fixed top-5 left-3 z-999999 text-xs font-extralight tracking-wide text-white/30">
                         {Math.round(progress)}%
                   </div>
             </>

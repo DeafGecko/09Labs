@@ -13,17 +13,17 @@ export default function Hero() {
       variants={sectionVariants}
       initial="hidden"
       animate="show"
-      className="relative snap-start mx-auto grid min-h-screen max-w-6xl items-center gap-10 overflow-hidden px-6 py-24 md:grid-cols-2"
+      className="relative snap-start mx-auto grid min-h-screen max-w-6xl items-center gap-10 overflow-hidden pt-4 px-6 py-12 md:grid-cols-2"
     >
       {/* GIANT 09 BACKGROUND */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.60 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
         className="pointer-events-none absolute right-[5%] top-1/2 hidden -translate-y-1/2 md:block"
       >
         {/* giant 09 */}
-        <LogoMark className="relative h-auto w-165 fill-[rgba(255,255,255,0.03)]" />
+        <LogoMark className="relative h-auto w-165" />
       </motion.div>
 
       {/* LEFT CONTENT */}
@@ -58,7 +58,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-8 max-w-2xl text-xl leading-relaxed text-white/70"
+          className="mt-8 max-w-2xl text-xl leading-relaxed text-white/80"
         >
           Building cinematic interfaces, motion systems, and accessible frontend experiences.
         </motion.p>
@@ -104,7 +104,7 @@ export default function Hero() {
               href="https://www.linkedin.com/in/dwight-rogers-22b417a8/"
               target="_blank"
               rel="noopener noreferrer"
-              className="transition-all duration-300 hover:text-blue-400"
+              className="transition-all duration-300 hover:text-[#38BDF8]"
               aria-label="LinkedIn Profile"
             >
               <FaLinkedin size={24} />

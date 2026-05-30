@@ -57,7 +57,7 @@ export default function Stack() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, amount: 0.2 }}
-                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center px-6 py-24"
+                  className="snap-start mx-auto flex min-h-screen max-w-6xl items-center pt-2 px-6 py-24"
             >
                   <div className="w-full">
                         {/* HEADER */}
@@ -86,8 +86,8 @@ export default function Stack() {
                                                 key={group.title}
                                                 whileHover={{
                                                       y: -8,
-                                                      borderColor: "rgba(245,127,0,0.35)",
-                                                      boxShadow: "0 0 30px rgba(245,127,0,0.08)",
+                                                      borderColor: "rgba(56,141,248,0.35)", // cyan blue
+                                                      boxShadow: "0 0 30px rgba(56,141,248,0.08)",
                                                 }}
                                                 transition={{ duration: 0.25 }}
                                                 className="group relative overflow-hidden rounded-3xl border border-(--border) bg-[rgba(18,18,18,0.72)] p-6 backdrop-blur-xl"
@@ -99,7 +99,7 @@ export default function Stack() {
 
                                                 <div className="mb-6 flex items-center gap-4">
                                                       {/* ICON */}
-                                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-(--border) bg-[rgba(28,28,28,0.82)] text-(--accent) transition-all duration-300 group-hover:border-(--accent-border)">
+                                                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-(--border) bg-[rgba(28,28,28,0.60)] text-(--accent) transition-all duration-300 group-hover:border-(--accent-border)">
                                                             <Icon size={22} />
                                                       </div>
 
