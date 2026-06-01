@@ -27,7 +27,7 @@ export default function About() {
                               {/* ACTIONS */}
                               <div className="flex flex-wrap gap-4 pt-8">
                                     <a
-                                          href="/resume/dwight-rogers-resume.pdf"
+                                          href="https://resume.09labs.dev"
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           className="inline-flex items-center justify-center rounded-2xl border border-[var(--border)] bg-[rgba(18,18,18,0.72)] px-6 py-4 text-sm tracking-[0.18em] text-white transition-all duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
