@@ -1,4 +1,6 @@
 {
+      "tailwindCSS.lint.cssConflict": "ignore",
+      "css.lint.unknownAtRules": "ignore",
       "cSpell.words": [
             "frontmatter",
             "logowide",
