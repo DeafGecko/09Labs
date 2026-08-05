@@ -59,27 +59,30 @@ No flash when the page loads. It just works.
 ## What's Inside
 
 Here's the folder layout:
+
+```
 09labs/
 ├── public/
-│ └── assets/ # Logo, icons, images
+│   └── assets/          # Logo, icons, images
 ├── src/
-│ ├── components/ # All the pieces
-│ │ ├── Header.astro
-│ │ ├── NavMenu.astro
-│ │ ├── MobileMenu.tsx
-│ │ ├── ThemeToggle.tsx
-│ │ └── ContactButton.astro
-│ ├── layouts/
-│ │ └── BaseLayout.astro
-│ ├── pages/
-│ │ ├── index.astro # Homepage
-│ │ └── sandbox.astro # Testing area
-│ └── styles/
-│ └── global.css
+│   ├── components/      # All the pieces
+│   │   ├── Header.astro
+│   │   ├── NavMenu.astro
+│   │   ├── MobileMenu.tsx
+│   │   ├── ThemeToggle.tsx
+│   │   └── ContactButton.astro
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   ├── pages/
+│   │   ├── index.astro      # Homepage
+│   │   └── sandbox.astro    # Testing area
+│   └── styles/
+│       └── global.css
 ├── astro.config.mjs
 ├── tailwind.config.mjs
 ├── tsconfig.json
 └── package.json
+```
 
 ## License
 
