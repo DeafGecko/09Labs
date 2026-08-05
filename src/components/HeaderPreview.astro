@@ -12,7 +12,8 @@ import ContactButton from "./ContactButton.tsx";
     <div
       class="grid h-16 grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
     >
-      <!-- Left: Logo -->
+
+<!-- Left: Logo -->
       <div class="flex items-center justify-self-start">
         <a href="/" aria-label="Home">
           <img
@@ -23,24 +24,25 @@ import ContactButton from "./ContactButton.tsx";
         </a>
       </div>
 
-      <!-- Center: Desktop navigation -->
+<!-- Center: Desktop navigation -->
       <NavMenu />
 
-      <!-- Right: Hamburger + desktop contact + toggle -->
+<!-- Right: Hamburger + desktop contact + toggle -->
       <div
         class="flex items-center justify-self-end space-x-2 md:space-x-4 flex-nowrap"
       >
-        <!-- Mobile hamburger (hidden on desktop) -->
+
+<!-- Mobile hamburger (hidden on desktop) -->
         <div class="md:hidden">
           <MobileMenu client:load />
         </div>
 
-        <!-- Contact button (large desktop only) -->
+<!-- Contact button (large desktop only) -->
         <div class="hidden xl:block">
           <ContactButton />
         </div>
 
-        <!-- Theme toggle (always visible) -->
+<!-- Theme toggle (always visible) -->
         <ThemeToggle client:load />
       </div>
     </div>

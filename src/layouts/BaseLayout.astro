@@ -16,6 +16,21 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · 09labs</title>
+    <!-- Light mode favicon -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon-light.svg?v=2"
+      media="(prefers-color-scheme: light)"
+    />
+
+    <!-- Dark mode favicon (white version) -->
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/favicon-dark.svg?v=2"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

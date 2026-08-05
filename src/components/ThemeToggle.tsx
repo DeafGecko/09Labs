@@ -5,10 +5,11 @@ const ThemeToggle = () => {
       const [mounted, setMounted] = useState(false);
       const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Only run on client after mount
+// Only run on client after mount
             useEffect(() => {
             setMounted(true);
-            // Read from localStorage and DOM
+
+// Read from localStorage and DOM
             const stored = localStorage.getItem('09labs-theme');
             const isDark = document.documentElement.classList.contains('dark');
             const initial = stored === 'dark' || (isDark && !stored) ? 'dark' : 'light';
