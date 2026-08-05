@@ -1,46 +1,86 @@
-# Astro Starter Kit: Basics
+# 09labs – My Portfolio
 
-```sh
-npm create astro@latest -- --template basics
-```
+**Current status:** Header is done and merged.  
+**Next:** Building the **Hero section** – coming soon.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+This is my personal portfolio website. It shows my work, my skills, and how to contact me.
 
-Inside of your Astro project, you'll see the following folders and files:
+I built it with **Astro**, **React**, and **Tailwind CSS**.
 
-```text
-/
+---
+
+## What You See
+
+- **Header** with my logo, navigation menu, contact icon, and dark/light toggle.
+- **Work** – projects I've built.
+- **Stack** – tools and technologies I use.
+- **Experience** – where I've worked and what I did.
+- **Contact** – how to reach me.
+
+Everything works on desktop, tablet, and phone.
+
+---
+
+## How I Build
+
+I use **two servers** at the same time.
+
+One server is for **preview** – I build new things there first and test them.
+
+The other server is for **final** – only approved things go there.
+
+| What | Port | URL |
+|------|------|-----|
+| Preview (testing) | 4323 | http://localhost:4323/sandbox |
+| Final (live site) | 4324 | http://localhost:4324 |
+
+When I preview something, I see a **red banner** at the top that says **"PREVIEW – Not yet merged"**.
+
+That tells me it's not on the live site yet.
+
+When I'm happy with it, I move it to the final site.
+
+---
+
+## Dark and Light Mode
+
+The site has dark mode and light mode.
+
+- It checks your computer settings first.
+- You can toggle it manually.
+- It remembers what you chose.
+
+No flash when the page loads. It just works.
+
+---
+
+## What's Inside
+
+Here's the folder layout:
+09labs/
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
+│ └── assets/ # Logo, icons, images
+├── src/
+│ ├── components/ # All the pieces
+│ │ ├── Header.astro
+│ │ ├── NavMenu.astro
+│ │ ├── MobileMenu.tsx
+│ │ ├── ThemeToggle.tsx
+│ │ └── ContactButton.astro
+│ ├── layouts/
+│ │ └── BaseLayout.astro
+│ ├── pages/
+│ │ ├── index.astro # Homepage
+│ │ └── sandbox.astro # Testing area
+│ └── styles/
+│ └── global.css
+├── astro.config.mjs
+├── tailwind.config.mjs
+├── tsconfig.json
 └── package.json
-```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## License
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Licensed under the [MIT License](LICENSE).

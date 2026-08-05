@@ -1,0 +1,71 @@
+---
+import Header from "../components/Header.astro";
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  sandbox?: boolean;
+  hideHeader?: boolean; // ← new prop
+}
+const { title, sandbox = false, hideHeader = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} · 09labs</title>
+
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Dynamic theme-color for mobile browsers -->
+    <meta name="theme-color" id="theme-color" content="#ffffff" />
+
+    <!-- Always open in light mode -->
+    <script is:inline>
+      (function () {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("09labs-theme", "light");
+        document.querySelector('meta[name="theme-color"]').content = "#ffffff";
+      })();
+    </script>
+
+    <!-- Smooth transitions (global) -->
+    <style is:global>
+      * {
+        transition:
+          background-color 0.2s ease-in-out,
+          border-color 0.2s ease-in-out,
+          color 0.2s ease-in-out;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white dark:bg-zinc-900 text-gray-900 dark:text-white font-sans antialiased"
+  >
+    <!-- aria-live region for screen readers -->
+    <div id="announcer" aria-live="polite" class="sr-only"></div>
+
+    <!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
+    {
+      sandbox && (
+        <div class="bg-red-600 text-white text-center py-2 text-sm font-sans font-bold tracking-wider">
+          ⚠️ PREVIEW – Not yet merged
+        </div>
+      )
+    }
+
+    <!-- Main Header (skip if hideHeader is true) -->
+    {!hideHeader && <Header />}
+
+    <!-- Page content -->
+    <slot />
+  </body>
+</html>
