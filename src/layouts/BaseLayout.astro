@@ -16,7 +16,7 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · 09labs</title>
-    <!-- Light mode favicon -->
+<!-- Light mode favicon -->
     <link
       rel="icon"
       type="image/svg+xml"
@@ -24,7 +24,7 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       media="(prefers-color-scheme: light)"
     />
 
-    <!-- Dark mode favicon (white version) -->
+<!-- Dark mode favicon (white version) -->
     <link
       rel="icon"
       type="image/svg+xml"
@@ -32,18 +32,18 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       media="(prefers-color-scheme: dark)"
     />
 
-    <!-- Inter Font -->
+<!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Dynamic theme-color for mobile browsers -->
+<!-- Dynamic theme-color for mobile browsers -->
     <meta name="theme-color" id="theme-color" content="#ffffff" />
 
-    <!-- Always open in light mode -->
+<!-- Always open in light mode -->
     <script is:inline>
       (function () {
         document.documentElement.classList.remove("dark");
@@ -52,7 +52,7 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       })();
     </script>
 
-    <!-- Smooth transitions (global) -->
+<!-- Smooth transitions (global) -->
     <style is:global>
       * {
         transition:
@@ -65,10 +65,10 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
   <body
     class="bg-white dark:bg-zinc-900 text-gray-900 dark:text-white font-sans antialiased"
   >
-    <!-- aria-live region for screen readers -->
+<!-- aria-live region for screen readers -->
     <div id="announcer" aria-live="polite" class="sr-only"></div>
 
-    <!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
+<!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
     {
       sandbox && (
         <div class="bg-red-600 text-white text-center py-2 text-sm font-sans font-bold tracking-wider">
@@ -77,10 +77,10 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       )
     }
 
-    <!-- Main Header (skip if hideHeader is true) -->
+<!-- Main Header (skip if hideHeader is true) -->
     {!hideHeader && <Header />}
 
-    <!-- Page content -->
+<!-- Page content -->
     <slot />
   </body>
 </html>

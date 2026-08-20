@@ -1,21 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HeaderPreview from '../components/HeaderPreview.astro';
+import HeroSection from '../components/HeroSection.astro';
 ---
 
-<BaseLayout 
-  title="Header Preview" 
-  sandbox={true} 
-  hideHeader={true}
->
-<!-- Only the new header preview renders -->
-  <HeaderPreview />
-  
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <h1 class="text-3xl font-bold">Header Preview</h1>
-    <p class="mt-4 text-gray-600 dark:text-gray-300">
-      This is the new header with your logo and Lucide icons.
-      Toggle the theme to see the icon change.
-    </p>
-  </main>
+<BaseLayout title="Sandbox" sandbox={true} hideHeader={true}>
+  <HeroSection />
 </BaseLayout>
