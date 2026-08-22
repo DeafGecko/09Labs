@@ -1,8 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import HeroSection from '../components/HeroSection.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HeroSection from "../components/HeroSection.astro";
+import ThemeToggle from "../components/ThemeToggle";
 ---
 
 <BaseLayout title="Sandbox" sandbox={true} hideHeader={true}>
+  <div class="fixed right-4 top-14 z-50">
+    <ThemeToggle client:load />
+  </div>
   <HeroSection />
 </BaseLayout>

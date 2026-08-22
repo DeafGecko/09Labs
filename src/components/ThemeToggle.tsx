@@ -33,9 +33,9 @@ const ThemeToggle = () => {
             aria-label="Loading theme toggle"
             className="
             relative inline-flex h-10 w-10 items-center justify-center
-            rounded-lg border border-gray-300 dark:border-zinc-600
-            bg-white dark:bg-zinc-800
-            text-gray-800 dark:text-gray-200
+            rounded-lg border border-[#d6d0c8] dark:border-[#1f2937]
+            bg-[#ece9e4] dark:bg-[#0f1520]
+            text-[#1a1a1a] dark:text-[#eef4ff]
             transition-colors duration-200
             "
             >
@@ -53,11 +53,11 @@ const ThemeToggle = () => {
             onClick={toggle}
             className="
                   relative inline-flex h-10 w-10 items-center justify-center
-                  rounded-lg border border-gray-300 dark:border-zinc-600
-                  bg-white dark:bg-zinc-800
-                  text-gray-800 dark:text-gray-200
-                  hover:bg-gray-100 dark:hover:bg-zinc-700
-                  focus:ring-2 focus:ring-blue-500 focus:outline-none
+                  rounded-lg border border-[#d6d0c8] dark:border-[#1f2937]
+                  bg-[#ece9e4] dark:bg-[#0f1520]
+                  text-[#1a1a1a] dark:text-[#eef4ff]
+                  hover:bg-[#e0dbd4] dark:hover:bg-[#161d2b]
+                  focus-visible:ring-2 focus-visible:ring-[#5a8eff] focus:outline-none
                   transition-colors duration-200
                   "
       >

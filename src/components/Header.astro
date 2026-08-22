@@ -6,44 +6,58 @@ import ContactButton from "./ContactButton";
 ---
 
 <header
-      class="sticky top-0 z-50 border-b border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 transition-colors"
+  class="sticky top-0 z-50 border-b border-[#e8e4de]/60 dark:border-white/5 bg-[#f5f2ee] dark:bg-[#0a0e17] backdrop-blur-xl transition-colors"
 >
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div
-                  class="grid h-16 grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
-            >
-<!-- Left: Logo -->
-            <div class="flex items-center justify-self-start">
-                  <a href="/" aria-label="Home">
-                  <img
-                        src="/assets/logowide.svg"
-                        alt="09labs"
-                        class="h-8 w-auto invert dark:invert-0"
-                  />
-                  </a>
-            </div>
-
-<!-- Center: Desktop navigation -->
-                  <NavMenu />
-
-<!-- Right: Hamburger + desktop contact + toggle -->
-                  <div
-                  class="flex items-center justify-self-end space-x-2 md:space-x-4 flex-nowrap"
-                  >
-
-<!-- Mobile hamburger (hidden on desktop) -->
-                        <div class="md:hidden">
-                        <MobileMenu client:load />
-                        </div>
-
-<!-- Contact button (large desktop only) -->
-                        <div class="hidden xl:block">
-                        <ContactButton />
-                        </div>
-
-<!-- Theme toggle (always visible) -->
-                        <ThemeToggle client:load />
-                  </div>
-            </div>
+  <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="grid h-16 grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
+    >
+      <!-- Left: Logo -->
+      <div class="flex items-center justify-self-start">
+        <a href="/" aria-label="Home" class="group">
+          <span class="brand-logo" aria-hidden="true"></span>
+        </a>
       </div>
+
+      <!-- Center: Desktop navigation -->
+      <NavMenu />
+
+      <!-- Right: Hamburger + desktop contact + toggle -->
+      <div
+        class="flex items-center justify-self-end space-x-2 md:space-x-4 flex-nowrap"
+      >
+        <!-- Mobile hamburger (hidden on desktop) -->
+        <div class="md:hidden">
+          <MobileMenu client:load />
+        </div>
+
+        <!-- Contact button (large desktop only) -->
+        <div class="hidden xl:block">
+          <ContactButton />
+        </div>
+
+        <!-- Theme toggle (always visible) -->
+        <ThemeToggle client:load />
+      </div>
+    </div>
+  </div>
 </header>
+
+<style>
+  .brand-logo {
+    display: block;
+    width: 6.4rem;
+    height: 2rem;
+    background-color: #2a52cc;
+    mask: url("/assets/logowide.svg") center / contain no-repeat;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.dark) .brand-logo {
+    background-color: #5a8eff;
+  }
+
+  .group:hover .brand-logo {
+    opacity: 0.8;
+  }
+</style>

@@ -1,56 +1,47 @@
 ---
-// HeroSection.astro
-// A precision engineering blueprint hero with live Astro syntax typing
+import HeroContent from "./HeroContent";
 
-// No imports needed for this component - all styling and logic is self-contained
-// The canvas handles all the animation and interaction
-
-// Component props (optional)
 export interface Props {
   title?: string;
   subtitle?: string;
-  badge?: string;
   primaryButtonText?: string;
   secondaryButtonText?: string;
 }
 
 const {
-  title = "Precision",
-  subtitle = "Engineering",
-  badge = "IDE · MINI-MAP",
-  primaryButtonText = "Open drawing",
-  secondaryButtonText = "Inspect",
+  title = "REACT",
+  subtitle = "DEVELOPER",
+  primaryButtonText = "Work Projects",
+  secondaryButtonText = "Contact",
 } = Astro.props;
 ---
 
 <!-- Hero Section -->
-<section class="hero" id="hero-section">
-  <canvas id="blueprintCanvas"></canvas>
+<section
+  class="hero"
+  id="hero-section"
+  aria-label="Hero — Dwight Rogers, Design Engineering"
+>
+  <canvas
+    id="blueprintCanvas"
+    role="img"
+    aria-label="Animated blueprint background with live code editor visualization"
+  ></canvas>
 
   <div class="hero-content">
-    <div class="hero-badge">{badge}</div>
-    <h1 class="hero-title">
-      {title}
-      <br /><span class="accent">{subtitle}</span>
-    </h1>
-    <p class="hero-sub">
-      :: ide · minimap · 2° rotation<br />
-      tolerance ±0.001 · ISO 2768
-    </p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="alert('📐 blueprint loaded')"
-        >{primaryButtonText}</button
-      >
-      <button class="btn-ghost" onclick="alert('📏 measure tool')"
-        >{secondaryButtonText}</button
-      >
-    </div>
+    <HeroContent
+      client:idle
+      title={title}
+      subtitle={subtitle}
+      primaryButtonText={primaryButtonText}
+      secondaryButtonText={secondaryButtonText}
+    />
   </div>
-  <div class="coords">
-    <div id="coordsXY">X: 0.000 · Y: 0.000</div>
-    <div class="dim">IDE: ACTIVE · v5.8.0</div>
+  <div class="coords" aria-live="polite" aria-atomic="true">
+    <div id="coordsXY" aria-label="Cursor coordinates">X: 0.000 · Y: 0.000</div>
+    <div class="dim" aria-label="IDE status">IDE: ACTIVE · v5.8.0</div>
   </div>
-  <div class="scroll-hint">
+  <div class="scroll-hint" aria-hidden="true">
     drag up or down<br />
     use mouse to scroll
   </div>
@@ -68,7 +59,8 @@ const {
     width: 100%;
     /* fill the viewport below the 64px sticky header */
     height: calc(100vh - 64px);
-    background: #0a0e17;
+    background: #f5f2ee;
+    transition: background 0.3s ease;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -76,6 +68,10 @@ const {
     padding: 0 6% 0 12%;
     user-select: none;
     -webkit-user-select: none;
+  }
+
+  :global(.dark) .hero {
+    background: #0a0e17;
   }
 
   #blueprintCanvas {
@@ -89,6 +85,7 @@ const {
     z-index: 0;
   }
 
+  /* Hero content (text + buttons) is on top of the canvas */
   .hero-content {
     position: relative;
     z-index: 2;
@@ -96,124 +93,269 @@ const {
     pointer-events: none;
   }
 
-  .hero-content * {
+  .hero-content :global(*) {
     pointer-events: auto;
   }
 
-  .hero-badge {
-    display: inline-block;
-    background: rgba(40, 100, 220, 0.08);
-    backdrop-filter: blur(2px);
-    padding: 0.35rem 1.4rem;
-    border-radius: 100px;
+  /* React-rendered children need :global() to escape Astro scoping */
+  :global(.hero-content-inner) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.hero-name) {
+    font-family: "JetBrains Mono", monospace;
     font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.6px;
-    color: #6a9eff;
-    border: 1px solid rgba(60, 140, 255, 0.08);
-    margin-bottom: 1.8rem;
+    color: #2a52cc;
     text-transform: uppercase;
-    font-family: "JetBrains Mono", monospace;
+    margin-bottom: 1rem;
   }
 
-  .hero-title {
+  :global(.dark .hero-name) {
+    color: #6a9eff;
+  }
+
+  :global(.hero-title) {
     font-size: clamp(3.2rem, 10vw, 5.4rem);
     font-weight: 700;
     line-height: 1.05;
     letter-spacing: -0.025em;
-    color: #eef4ff;
+    color: #1a1a1a;
     margin-bottom: 1rem;
+    text-shadow: none;
+  }
+
+  :global(.dark .hero-title) {
+    color: #eef4ff;
     text-shadow: 0 2px 30px rgba(30, 80, 200, 0.08);
   }
 
-  .hero-title .accent {
-    color: #5a8eff;
+  :global(.hero-title .accent) {
+    color: #2a52cc;
     font-weight: 600;
   }
 
-  .hero-sub {
+  :global(.dark .hero-title .accent) {
+    color: #5a8eff;
+  }
+
+  :global(.hero-sub) {
     font-size: 1.15rem;
     line-height: 1.7;
-    color: rgba(180, 200, 235, 0.7);
+    color: rgba(40, 50, 80, 0.7);
     font-weight: 400;
     max-width: 500px;
     margin-bottom: 2.4rem;
     font-family: "JetBrains Mono", monospace;
-    font-weight: 400;
     letter-spacing: 0.2px;
   }
 
-  .hero-actions {
+  :global(.dark .hero-sub) {
+    color: rgba(180, 200, 235, 0.7);
+  }
+
+  :global(.hero-actions) {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     align-items: center;
   }
 
-  .btn-primary {
-    background: #1a2a4a;
-    border: 1px solid rgba(80, 150, 255, 0.15);
+  @property --primary-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes primary-border-travel {
+    to {
+      --primary-border-angle: 360deg;
+    }
+  }
+
+  @property --contact-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes contact-border-travel {
+    to {
+      --contact-border-angle: 360deg;
+    }
+  }
+
+  :global(.btn-primary::before) {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--primary-border-angle),
+      rgba(42, 82, 204, 0.2),
+      #5a8eff,
+      rgba(42, 82, 204, 0.2) 35%,
+      rgba(42, 82, 204, 0.2) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  :global(.btn-primary:hover::before) {
+    opacity: 1;
+    animation: primary-border-travel 2.4s linear infinite;
+  }
+
+  :global(.btn-primary) {
+    position: relative;
+    background: linear-gradient(145deg, #2a3f6e, #1a2a4a);
+    border: 1px solid rgba(42, 82, 204, 0.3);
     padding: 0.9rem 2.8rem;
     border-radius: 60px;
     font-weight: 500;
     font-size: 0.95rem;
-    color: #d6e6ff;
+    color: #eef4ff;
     cursor: pointer;
-    transition: all 0.25s ease;
     letter-spacing: 0.3px;
     font-family: "JetBrains Mono", monospace;
+    box-shadow: 0 4px 20px rgba(42, 82, 204, 0.15);
+  }
+
+  :global(.dark .btn-primary) {
     background: linear-gradient(145deg, #1a2a4a, #0f1a30);
+    border-color: rgba(80, 150, 255, 0.15);
+    color: #d6e6ff;
     box-shadow: 0 4px 20px rgba(30, 80, 200, 0.08);
   }
 
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    border-color: rgba(80, 150, 255, 0.3);
-    background: linear-gradient(145deg, #223a5e, #14203a);
-    box-shadow: 0 8px 30px rgba(30, 80, 200, 0.15);
-    color: white;
-  }
-
-  .btn-ghost {
-    background: rgba(255, 255, 255, 0.01);
+  :global(.btn-ghost) {
+    position: relative;
+    background: rgba(42, 82, 204, 0.06);
     backdrop-filter: blur(2px);
-    border: 1px solid rgba(80, 150, 255, 0.06);
+    border: 1px solid rgba(42, 82, 204, 0.15);
     padding: 0.9rem 2.4rem;
     border-radius: 60px;
     font-weight: 400;
     font-size: 0.95rem;
-    color: #8aacdf;
+    color: #2a52cc;
     cursor: pointer;
-    transition: all 0.2s;
     letter-spacing: 0.3px;
     font-family: "JetBrains Mono", monospace;
   }
 
-  .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(80, 150, 255, 0.15);
-    color: #b8d0ff;
-    transform: translateY(-2px);
+  :global(.btn-ghost::before) {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    padding: 2px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--contact-border-angle),
+      transparent 0 55%,
+      #5a8eff 72% 88%,
+      transparent 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :global(.dark .btn-ghost) {
+    background: rgba(255, 255, 255, 0.01);
+    border-color: rgba(80, 150, 255, 0.06);
+    color: #8aacdf;
+  }
+
+  :global(.btn-primary:hover) {
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  :global(.dark .btn-primary:hover) {
+    border-color: transparent;
+  }
+
+  :global(.btn-ghost:hover) {
+    background: rgba(42, 82, 204, 0.12);
+    border-color: rgba(42, 82, 204, 0.3);
+    color: #1a3aaa;
+  }
+
+  :global(.dark .btn-ghost:hover) {
+    background: rgba(90, 142, 255, 0.06);
+    border-color: #5a8eff;
+    color: #5a8eff;
+    box-shadow: none;
+  }
+
+  :global(.dark .btn-ghost:hover::before) {
+    opacity: 1;
+    animation: contact-border-travel 1.5s linear infinite;
+  }
+
+  :global(.btn-primary:focus-visible) {
+    outline: 2px solid #5a8eff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(90, 142, 255, 0.25);
+  }
+
+  :global(.btn-ghost:focus-visible) {
+    outline: 2px solid #6a9eff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(106, 158, 255, 0.2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(.hero-content-inner *) {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+    :global(.btn-primary::before),
+    :global(.btn-ghost::before) {
+      animation: none !important;
+      opacity: 0 !important;
+    }
   }
 
   .coords {
     position: absolute;
-    bottom: 10%;
-    left: 11rem;
+    bottom: 5%;
+    left: 4rem;
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
     font-family: "JetBrains Mono", monospace;
     font-size: 0.65rem;
-    color: rgba(100, 170, 255, 0.7);
+    color: rgba(42, 82, 204, 0.7);
     letter-spacing: 0.5px;
     pointer-events: none;
     white-space: nowrap;
     z-index: 2;
   }
 
+  :global(.dark) .coords {
+    color: rgba(100, 170, 255, 0.7);
+  }
+
   .coords .dim {
-    color: rgba(100, 170, 255, 0.35);
+    color: rgba(42, 82, 204, 0.45);
+  }
+
+  :global(.dark) .coords .dim {
+    color: rgba(100, 170, 255, 0.6);
   }
 
   .scroll-hint {
@@ -230,17 +372,17 @@ const {
     line-height: 1.8;
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 500px) {
     .hero {
       padding: 0 1.8rem;
       border-radius: 0;
       height: 80vh;
       max-height: 600px;
     }
-    .hero-title {
+    :global(.hero-title) {
       font-size: 2.6rem;
     }
-    .hero-sub {
+    :global(.hero-sub) {
       font-size: 0.95rem;
     }
     .coords,
@@ -249,8 +391,8 @@ const {
     }
     /* on mobile: canvas is dim blurred background, content readable on top */
     #blueprintCanvas {
-      opacity: 0.5;
-      filter: blur(1px);
+      opacity: 0.7;
+      filter: blur(0.5px);
     }
   }
 </style>
@@ -1178,102 +1320,118 @@ const {
     }
 
     // ---- PRETTIER SYNTAX HIGHLIGHTER ----
+    // Dark palette: existing neon-on-navy. Light palette: Ayu Light theme colors.
     function highlightPrettier(line) {
       if (!line || line.trim() === "") {
         return [{ text: line || "", color: "rgba(255,255,255,0)" }];
       }
+
+      const dark = document.documentElement.classList.contains("dark");
+
+      // Ayu Light token colors (full opacity — alpha applied at draw time)
+      // Dark token colors retain existing neon-on-navy palette
+      const C = dark
+        ? {
+            frontmatter: "rgba(242, 174,  73, 0.75)",
+            comment: "rgba(130, 180, 100, 0.70)",
+            string: "rgba(200, 180,  80, 0.85)",
+            number: "rgba(210, 160, 255, 0.85)",
+            keyword: "rgba(200, 120, 255, 0.85)",
+            astro: "rgba( 97, 219, 251, 0.90)",
+            tag: "rgba( 97, 219, 251, 0.75)",
+            attribute: "rgba(255, 150, 100, 0.85)",
+            hook: "rgba( 97, 219, 251, 0.90)",
+            utility: "rgba(130, 220, 180, 0.85)",
+            boolean: "rgba(210, 160, 255, 0.85)",
+            css: "rgba(255, 200, 150, 0.75)",
+            cssValue: "rgba(180, 200, 150, 0.75)",
+            punct: "rgba(180, 180, 220, 0.55)",
+            operator: "rgba(255, 200, 150, 0.65)",
+            space: "rgba(255, 255, 255, 0.10)",
+            ident: "rgba(180, 200, 220, 0.75)",
+          }
+        : {
+            // Ayu Light
+            frontmatter: "rgba(242, 174,  73, 0.90)",
+            comment: "rgba(171, 176, 182, 0.90)",
+            string: "rgba(134, 179,   0, 0.95)",
+            number: "rgba(163, 122, 204, 0.95)",
+            keyword: "rgba(250, 141,  62, 0.95)",
+            astro: "rgba( 57, 158, 230, 0.95)",
+            tag: "rgba( 85, 180, 212, 0.90)",
+            attribute: "rgba(242, 151,  24, 0.90)",
+            hook: "rgba( 57, 158, 230, 0.95)",
+            utility: "rgba(134, 179,   0, 0.90)",
+            boolean: "rgba(163, 122, 204, 0.95)",
+            css: "rgba(242, 151,  24, 0.90)",
+            cssValue: "rgba( 76, 191, 153, 0.90)",
+            punct: "rgba( 92,  97, 102, 0.80)",
+            operator: "rgba(237, 147, 102, 0.90)",
+            space: "rgba(  0,   0,   0, 0.00)",
+            ident: "rgba( 92,  97, 102, 0.90)",
+          };
 
       const tokens = [];
       let remaining = line;
       let i = 0;
 
       const pushToken = (text, color) => {
-        if (text) {
-          tokens.push({ text, color });
-        }
+        if (text) tokens.push({ text, color });
       };
 
       const patterns = [
-        {
-          regex: /^---/,
-          color: "rgba(255, 200, 100, 0.6)",
-          type: "frontmatter",
-        },
-        {
-          regex: /\/\/.*$/,
-          color: "rgba(130, 180, 100, 0.7)",
-          type: "comment",
-        },
-        {
-          regex: /"([^"\\]|\\.)*"/,
-          color: "rgba(200, 180, 80, 0.8)",
-          type: "string",
-        },
-        {
-          regex: /'([^'\\]|\\.)*'/,
-          color: "rgba(200, 180, 80, 0.8)",
-          type: "string",
-        },
-        {
-          regex: /`([^`\\]|\\.)*`/,
-          color: "rgba(200, 180, 80, 0.8)",
-          type: "string",
-        },
-        {
-          regex: /\b\d+\.?\d*\b/,
-          color: "rgba(210, 160, 255, 0.8)",
-          type: "number",
-        },
+        { regex: /^---/, color: C.frontmatter, type: "frontmatter" },
+        { regex: /\/\/.*$/, color: C.comment, type: "comment" },
+        { regex: /"([^"\\]|\\.)*"/, color: C.string, type: "string" },
+        { regex: /'([^'\\]|\\.)*'/, color: C.string, type: "string" },
+        { regex: /`([^`\\]|\\.)*`/, color: C.string, type: "string" },
+        { regex: /\b\d+\.?\d*\b/, color: C.number, type: "number" },
         {
           regex:
             /\b(import|export|from|const|let|var|function|return|if|else|for|while|do|switch|case|break|continue|new|class|interface|type|enum|extends|implements|typeof|instanceof|void|delete|in|of|await|async|yield|try|catch|finally|throw|default)\b/,
-          color: "rgba(200, 120, 255, 0.8)",
+          color: C.keyword,
           type: "keyword",
         },
         {
           regex:
             /\b(Astro|getCollection|getEntry|getEntryBySlug|render|slot|Content|islands)\b/,
-          color: "rgba(97, 219, 251, 0.9)",
+          color: C.astro,
           type: "astro",
         },
-        {
-          regex: /<\/?[a-zA-Z][a-zA-Z0-9-]*>/,
-          color: "rgba(97, 219, 251, 0.7)",
-          type: "tag",
-        },
+        { regex: /<\/?[a-zA-Z][a-zA-Z0-9-]*>/, color: C.tag, type: "tag" },
         {
           regex:
             /\b(className|ref|onClick|onChange|onSubmit|style|key|id|type|value|placeholder|disabled|checked|selected|defaultValue|defaultChecked|htmlFor|dangerouslySetInnerHTML|title|description|tags|published|author|url|datetime|slot|client:load|client:idle|client:visible)\b/,
-          color: "rgba(255, 150, 100, 0.8)",
+          color: C.attribute,
           type: "attribute",
         },
         {
           regex:
             /\b(useState|useEffect|useRef|useCallback|useMemo|useContext|useReducer|useLayoutEffect|useImperativeHandle|useDebugValue|useTransition|useDeferredValue|useId)\b/,
-          color: "rgba(97, 219, 251, 0.9)",
+          color: C.hook,
           type: "hook",
         },
         {
           regex:
             /\b(Partial|Required|Readonly|Record|Pick|Omit|Exclude|Extract|NonNullable|ReturnType|InstanceType|Parameters|ConstructorParameters)\b/,
-          color: "rgba(130, 220, 180, 0.8)",
+          color: C.utility,
           type: "utility",
         },
         {
           regex: /\b(true|false|null|undefined)\b/,
-          color: "rgba(210, 160, 255, 0.8)",
+          color: C.boolean,
           type: "boolean",
         },
         {
           regex:
             /\b(display|margin|padding|width|height|max-width|min-width|max-height|min-height|color|background|border|font-size|font-weight|line-height|text-align|position|top|left|right|bottom|flex|grid|gap|align-items|justify-content)\b/,
-          color: "rgba(255, 200, 150, 0.7)",
+          color: C.css,
           type: "css",
         },
         {
           regex:
             /\b(auto|block|inline|flex|grid|relative|absolute|fixed|static|sticky|cover|contain|center|start|end|space-between|space-around|wrap|nowrap|column|row)\b/,
-          color: "rgba(180, 200, 150, 0.7)",
+          color: C.cssValue,
           type: "css-value",
         },
       ];
@@ -1296,13 +1454,13 @@ const {
         if (!matched) {
           const char = remaining[i];
           if (/[{}()\[\]<>;:,.]/.test(char)) {
-            pushToken(char, "rgba(180, 180, 220, 0.5)");
+            pushToken(char, C.punct);
           } else if (/[=+\-*/%&|^~!]/.test(char)) {
-            pushToken(char, "rgba(255, 200, 150, 0.6)");
+            pushToken(char, C.operator);
           } else if (char === " ") {
-            pushToken(char, "rgba(255,255,255,0.1)");
+            pushToken(char, C.space);
           } else {
-            pushToken(char, "rgba(180, 200, 220, 0.7)");
+            pushToken(char, C.ident);
           }
           i++;
         }
@@ -1468,7 +1626,12 @@ const {
       const centerX = width / 2;
       const centerY = height / 2;
 
-      // Background
+      // Theme — responds to light/dark mode toggle
+      const isDark = document.documentElement.classList.contains("dark");
+      // grid/line color: blue tones on dark, muted ink on light
+      const gc = isDark ? "70, 150, 255" : "80, 100, 160";
+      const gc2 = isDark ? "80, 160, 255" : "90, 110, 170";
+      const gc3 = isDark ? "100, 180, 255" : "100, 120, 180";
       const bgGrad = ctx.createRadialGradient(
         width * 0.5,
         height * 0.5,
@@ -1477,9 +1640,15 @@ const {
         height * 0.5,
         width * 0.9,
       );
-      bgGrad.addColorStop(0, "#161d2b");
-      bgGrad.addColorStop(0.5, "#0e121c");
-      bgGrad.addColorStop(1, "#080b11");
+      if (isDark) {
+        bgGrad.addColorStop(0, "#161d2b");
+        bgGrad.addColorStop(0.5, "#0e121c");
+        bgGrad.addColorStop(1, "#080b11");
+      } else {
+        bgGrad.addColorStop(0, "#edeae5");
+        bgGrad.addColorStop(0.5, "#f0ede8");
+        bgGrad.addColorStop(1, "#f5f2ee");
+      }
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, width, height);
 
@@ -1500,7 +1669,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
-        ctx.strokeStyle = `rgba(70, 150, 255, ${finalAlpha * 0.6})`;
+        ctx.strokeStyle = `rgba(${gc}, ${finalAlpha * 0.6})`;
         ctx.lineWidth = 0.3;
         ctx.stroke();
       }
@@ -1519,7 +1688,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(width, y);
-        ctx.strokeStyle = `rgba(70, 150, 255, ${finalAlpha * 0.6})`;
+        ctx.strokeStyle = `rgba(${gc}, ${finalAlpha * 0.6})`;
         ctx.lineWidth = 0.3;
         ctx.stroke();
       }
@@ -1541,7 +1710,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.strokeStyle = `rgba(80, 160, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(${gc2}, ${alpha})`;
         ctx.stroke();
       }
 
@@ -1559,7 +1728,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.strokeStyle = `rgba(80, 160, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(${gc2}, ${alpha})`;
         ctx.stroke();
       }
 
@@ -1582,21 +1751,21 @@ const {
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(endX, endY);
-        ctx.strokeStyle = `rgba(100, 180, 255, ${alpha * 0.5})`;
+        ctx.strokeStyle = `rgba(${gc3}, ${alpha * 0.5})`;
         ctx.lineWidth = line.width;
         ctx.stroke();
 
         if (line.hasCircle) {
           ctx.beginPath();
           ctx.arc(x, y, 1.2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(100, 180, 255, ${alpha * 0.3})`;
+          ctx.fillStyle = `rgba(${gc3}, ${alpha * 0.3})`;
           ctx.fill();
         }
 
         const midX = (x + endX) / 2 + Math.sin(angle + 1.2) * 10;
         const midY = (y + endY) / 2 + Math.cos(angle + 1.2) * 10;
         ctx.font = "5px JetBrains Mono, monospace";
-        ctx.fillStyle = `rgba(100, 180, 255, ${alpha * 0.35})`;
+        ctx.fillStyle = `rgba(${gc3}, ${alpha * 0.35})`;
         ctx.fillText(line.label, midX - 8, midY + 2);
       }
 
@@ -1621,7 +1790,7 @@ const {
       const crossAlpha =
         0.04 + 0.08 * (1 - Math.min(1, Math.hypot(mouseX, mouseY) * 0.5));
       ctx.lineWidth = 0.4;
-      ctx.strokeStyle = `rgba(100, 180, 255, ${crossAlpha})`;
+      ctx.strokeStyle = `rgba(${gc3}, ${crossAlpha})`;
       ctx.setLineDash([2, 6]);
       ctx.beginPath();
       ctx.moveTo(0, my);
@@ -1636,7 +1805,7 @@ const {
         if (ringAlpha < 0.001) break;
         ctx.beginPath();
         ctx.arc(mx, my, r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(80, 160, 255, ${ringAlpha})`;
+        ctx.strokeStyle = `rgba(${gc2}, ${ringAlpha})`;
         ctx.lineWidth = 0.2;
         ctx.stroke();
       }
@@ -1650,7 +1819,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(x, centerY - 4);
         ctx.lineTo(x, centerY + 4);
-        ctx.strokeStyle = `rgba(70, 150, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(${gc}, ${alpha})`;
         ctx.stroke();
       }
       for (let y = 0; y <= height; y += spacingY * 2) {
@@ -1660,7 +1829,7 @@ const {
         ctx.beginPath();
         ctx.moveTo(centerX - 4, y);
         ctx.lineTo(centerX + 4, y);
-        ctx.strokeStyle = `rgba(70, 150, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(${gc}, ${alpha})`;
         ctx.stroke();
       }
 
@@ -1703,7 +1872,9 @@ const {
         if (yPos < viewportStart - LINE_HEIGHT || yPos > viewportEnd) continue;
 
         const centerDist = (yPos - height * 0.5) / (height * 0.3);
-        const alpha = Math.max(0, 1 - Math.abs(centerDist) * 0.7) * 0.85;
+        const alpha = isDark
+          ? Math.max(0, 1 - Math.abs(centerDist) * 0.7) * 0.85
+          : Math.max(0, 1 - Math.abs(centerDist) * 0.35) * 0.95;
         if (alpha < 0.01) continue;
 
         const tokens = highlightPrettier(line);
@@ -1715,7 +1886,9 @@ const {
         // full-line blue background when this line is hovered
         if (isHoveredLine) {
           ctx.save();
-          ctx.fillStyle = "rgba(60, 120, 255, 0.12)";
+          ctx.fillStyle = isDark
+            ? "rgba(60, 120, 255, 0.12)"
+            : "rgba(42, 82, 204, 0.07)";
           ctx.fillRect(
             startX - 32,
             yPos - LINE_HEIGHT + 3,
@@ -1773,7 +1946,9 @@ const {
         });
 
         ctx.font = "9px JetBrains Mono, monospace";
-        ctx.fillStyle = `rgba(80, 150, 255, ${alpha * 0.55})`;
+        ctx.fillStyle = isDark
+          ? `rgba(80, 150, 255, ${alpha * 0.55})`
+          : `rgba(42, 82, 160, ${alpha * 0.45})`;
         ctx.fillText(
           (i + 1).toString().padStart(3, " "),
           startX - 28,
@@ -1825,7 +2000,9 @@ const {
 
         if (yPos >= viewportStart && yPos <= viewportEnd) {
           const centerDist = (yPos - height * 0.5) / (height * 0.3);
-          let alpha = Math.max(0, 1 - Math.abs(centerDist) * 0.7) * 0.95;
+          let alpha = isDark
+            ? Math.max(0, 1 - Math.abs(centerDist) * 0.7) * 0.95
+            : Math.max(0, 1 - Math.abs(centerDist) * 0.35) * 0.95;
 
           const showCursor = Math.floor(Date.now() / 500) % 2 === 0;
 
@@ -1895,7 +2072,9 @@ const {
           }
 
           ctx.font = "9px JetBrains Mono, monospace";
-          ctx.fillStyle = `rgba(80, 150, 255, ${alpha * 0.55})`;
+          ctx.fillStyle = isDark
+            ? `rgba(80, 150, 255, ${alpha * 0.55})`
+            : `rgba(42, 82, 160, ${alpha * 0.45})`;
           const lineNum = (currentLineIndex + 1).toString().padStart(3, " ");
           ctx.fillText(lineNum, startX - 28, yPos + 2);
         }
@@ -1906,7 +2085,7 @@ const {
       // ---- Scroll progress indicator ----
 
       // ---- MINIMAP (hidden on mobile — only IDE syntax shows) ----
-      const mmW = width > 640 ? 56 : 0;
+      const mmW = width > 1024 ? 56 : 0;
       const mmLineH = 2.5;
       const mmPad = 4;
       const mmX = width - mmW - 10 - width * 0.005;
@@ -1922,7 +2101,9 @@ const {
       const mmScrollTop = mmFirstLine * mmLineH;
 
       // background + outline
-      ctx.fillStyle = "rgba(6, 10, 20, 0.10)";
+      ctx.fillStyle = isDark
+        ? "rgba(6, 10, 20, 0.10)"
+        : "rgba(200, 210, 230, 0.15)";
       ctx.fillRect(mmX, mmY, mmW, mmH);
       ctx.strokeStyle = "rgba(80, 130, 200, 0.15)";
       ctx.lineWidth = 0.5;
@@ -2031,25 +2212,41 @@ const {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
-        ctx.strokeStyle = `rgba(80, 160, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(${gc2}, ${alpha})`;
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x2, y2, 1.5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(80, 160, 255, ${alpha * 0.5})`;
+        ctx.fillStyle = `rgba(${gc2}, ${alpha * 0.5})`;
         ctx.fill();
       }
     }
 
+    let isVisible = true;
+    let mouseMoveQueued = false;
+    let pendingMouseEvent = null;
+
     function animate(timestamp) {
-      drawBlueprint(timestamp);
+      if (isVisible) drawBlueprint(timestamp);
       animationId = requestAnimationFrame(animate);
+    }
+
+    function throttledMouseMove(e) {
+      pendingMouseEvent = e;
+      if (!mouseMoveQueued) {
+        mouseMoveQueued = true;
+        requestAnimationFrame(() => {
+          if (pendingMouseEvent) handleMouseMove(pendingMouseEvent);
+          mouseMoveQueued = false;
+          pendingMouseEvent = null;
+        });
+      }
     }
 
     function init() {
       resizeCanvas();
 
-      window.addEventListener("mousemove", handleMouseMove);
+      window.addEventListener("mousemove", throttledMouseMove);
       window.addEventListener("mouseleave", handleMouseLeave);
       window.addEventListener("wheel", handleWheel, { passive: false });
 
@@ -2080,11 +2277,10 @@ const {
               const lineIndex = Math.floor(
                 (mouseCanvasY - startY + effectiveScroll) / LINE_HEIGHT,
               );
-              if (lineIndex >= 0 && lineIndex < allTypedLines.length) {
-                hoveredLineIndex = lineIndex;
-              } else {
-                hoveredLineIndex = -1;
-              }
+              hoveredLineIndex =
+                lineIndex >= 0 && lineIndex < allTypedLines.length
+                  ? lineIndex
+                  : -1;
             } else {
               hoveredLineIndex = -1;
             }
@@ -2092,15 +2288,28 @@ const {
         },
         { passive: true },
       );
+
       window.addEventListener("touchend", () => {
         targetMouseX = 0;
         targetMouseY = 0;
         hoveredLineIndex = -1;
       });
 
-      window.addEventListener("resize", () => {
-        resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      // Pause RAF when tab is hidden
+      document.addEventListener("visibilitychange", () => {
+        isVisible = !document.hidden;
       });
+
+      // Pause RAF when hero scrolls off screen
+      const observer = new IntersectionObserver(
+        (entries) => {
+          isVisible = entries[0].isIntersecting;
+        },
+        { threshold: 0 },
+      );
+      observer.observe(canvas);
 
       if (animationId) cancelAnimationFrame(animationId);
       animate(0);
