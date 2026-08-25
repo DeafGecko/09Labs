@@ -17,7 +17,7 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title} · 09labs</title>
 
-<!-- Light mode favicon -->
+    <!-- Light mode favicon -->
     <link
       rel="icon"
       type="image/svg+xml"
@@ -25,7 +25,7 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       media="(prefers-color-scheme: light)"
     />
 
-<!-- Dark mode favicon (white version) -->
+    <!-- Dark mode favicon (white version) -->
     <link
       rel="icon"
       type="image/svg+xml"
@@ -33,40 +33,42 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       media="(prefers-color-scheme: dark)"
     />
 
-<!-- Fonts: preconnect + non-blocking load -->
+    <!-- Fonts: preconnect + non-blocking load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="preload"
       as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Azeret+Mono:wght@400;500;600&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Azeret+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Azeret+Mono:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
     </noscript>
 
-<!-- Dynamic theme-color for mobile browsers -->
-    <meta name="theme-color" id="theme-color" content="#f5f2ee" />
+    <!-- Dynamic theme-color for mobile browsers -->
+    <meta name="theme-color" id="theme-color" content="#0a0e17" />
 
-<!-- Always open in light mode -->
+    <!-- Default to dark mode while preserving an explicit saved preference -->
     <script is:inline>
       (function () {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("09labs-theme", "light");
-        document.querySelector('meta[name="theme-color"]').content = "#ffffff";
+        const storedTheme = localStorage.getItem("09labs-theme");
+        const theme = storedTheme === "light" ? "light" : "dark";
+        document.documentElement.classList.toggle("dark", theme === "dark");
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === "dark" ? "#0a0e17" : "#dfe2e3";
       })();
     </script>
 
-<!-- Smooth transitions (global) -->
+    <!-- Smooth transitions (global) -->
     <style is:global>
       * {
         transition:
@@ -77,13 +79,14 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
     </style>
   </head>
   <body
-    class="bg-[#f5f2ee] dark:bg-[#0a0e17] text-[#1a1a1a] dark:text-[#eef4ff] font-sans antialiased"
+    class="bg-[#dfe2e3] dark:bg-[#0a0e17] text-[#4a5059] dark:text-[#eef4ff] font-sans antialiased"
   >
-  
-<!-- aria-live region for screen readers -->
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <!-- aria-live region for screen readers -->
     <div id="announcer" aria-live="polite" class="sr-only"></div>
 
-<!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
+    <!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
     {
       sandbox && (
         <div class="bg-red-600 text-white text-center py-2 text-sm font-sans font-bold tracking-wider">
@@ -92,10 +95,171 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
       )
     }
 
-<!-- Main Header (skip if hideHeader is true) -->
+    <!-- Main Header (skip if hideHeader is true) -->
     {!hideHeader && <Header />}
 
-<!-- Page content -->
-    <slot />
+    <!-- Page content -->
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <script is:inline>
+      (() => {
+        let animationFrame;
+        let restoreScrollBehavior;
+
+        document.addEventListener("click", (event) => {
+          const link = event.target.closest('a[href^="#"]');
+          if (!link || link.classList.contains("skip-link")) return;
+
+          const hash = link.getAttribute("href");
+          const target = hash && document.querySelector(hash);
+          if (!target) return;
+
+          event.preventDefault();
+          cancelAnimationFrame(animationFrame);
+          restoreScrollBehavior?.();
+
+          const reduceMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)",
+          ).matches;
+          const start = window.scrollY;
+          const headerOffset = hash === "#hero-section" ? 0 : 80;
+          const destination = Math.max(
+            0,
+            target.getBoundingClientRect().top + start - headerOffset,
+          );
+
+          history.pushState(null, "", hash);
+
+          if (reduceMotion) {
+            window.scrollTo(0, destination);
+            return;
+          }
+
+          const root = document.documentElement;
+          const previousScrollBehavior = root.style.scrollBehavior;
+          root.style.scrollBehavior = "auto";
+          restoreScrollBehavior = () => {
+            root.style.scrollBehavior = previousScrollBehavior;
+            restoreScrollBehavior = undefined;
+          };
+
+          const distance = destination - start;
+          const startedAt = performance.now();
+          const duration = 900;
+
+          const step = (time) => {
+            const progress = Math.min((time - startedAt) / duration, 1);
+            const eased =
+              progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            window.scrollTo(0, start + distance * eased);
+
+            if (progress < 1) {
+              animationFrame = requestAnimationFrame(step);
+            } else {
+              restoreScrollBehavior();
+            }
+          };
+
+          animationFrame = requestAnimationFrame(step);
+        });
+      })();
+    </script>
   </body>
 </html>
+
+<style is:global>
+  html {
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+    background-color: #dfe2e3 !important;
+    transition: none;
+  }
+
+  html.dark {
+    background-color: #0a0e17 !important;
+  }
+
+  body {
+    min-height: 100vh;
+    overscroll-behavior-y: none;
+    overflow-x: clip;
+    background-color: #dfe2e3 !important;
+    transition: none;
+  }
+
+  html.dark body {
+    background-color: #0a0e17 !important;
+  }
+
+  #works-section,
+  #techstack-section,
+  #experience-section,
+  #contact-section {
+    --blueprint-edge: clamp(18px, 3.5vmin, 32px);
+    position: relative;
+  }
+
+  #works-section::before,
+  #techstack-section::before,
+  #experience-section::before,
+  #contact-section::before {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    inset: 0 var(--blueprint-edge);
+    border-inline: 1px dashed rgba(100, 120, 180, 0.14);
+    pointer-events: none;
+  }
+
+  .dark #works-section::before,
+  .dark #techstack-section::before,
+  .dark #experience-section::before,
+  .dark #contact-section::before {
+    border-inline-color: rgba(100, 180, 255, 0.12);
+  }
+
+  #works-section .slice,
+  #techstack-section .tech-card,
+  #experience-section .experience-item {
+    transform: perspective(900px) rotateX(var(--motion-tilt-x, 0deg))
+      rotateY(var(--motion-tilt-y, 0deg)) scale(var(--motion-scale, 1));
+  }
+
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    padding: 0.75rem 1rem;
+    color: #ffffff;
+    background: #1a3aaa;
+    border: 2px solid #ffffff;
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  :focus-visible {
+    outline: 2px solid #5a8eff;
+    outline-offset: 3px;
+  }
+
+  #hero-section,
+  #works-section,
+  #techstack-section {
+    scroll-margin-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto !important;
+    }
+  }
+</style>

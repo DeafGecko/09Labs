@@ -1,0 +1,44 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <p>&copy; {year} Dwight Rogers</p>
+  <p>Built with Astro, React, TypeScript &amp; Tailwind CSS</p>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 clamp(18px, 3.5vmin, 32px);
+    padding: 1.25rem calc(6% - clamp(18px, 3.5vmin, 32px));
+    color: #20469f;
+    background: #dfe2e3;
+    border-top: 1px dashed rgba(42, 82, 204, 0.2);
+    font:
+      600 0.72rem/1.5 "Azeret Mono",
+      monospace;
+  }
+
+  .site-footer p {
+    margin: 0;
+  }
+
+  :global(.dark) .site-footer {
+    color: #8aacdf;
+    background: #0a0e17;
+    border-top-color: rgba(106, 158, 255, 0.18);
+  }
+
+  @media (max-width: 640px) {
+    .site-footer {
+      flex-direction: column;
+      align-items: center;
+      padding: 1.25rem 0;
+      text-align: center;
+    }
+  }
+</style>

@@ -5,16 +5,18 @@ import MobileMenu from "./MobileMenu";
 import ContactButton from "./ContactButton";
 ---
 
-<header
-  class="sticky top-0 z-50 border-b border-[#e8e4de]/60 dark:border-white/5 bg-[#f5f2ee] dark:bg-[#0a0e17] backdrop-blur-xl transition-colors"
->
+<header class="site-header sticky top-0 z-50" data-site-header>
   <div class="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
     <div
       class="grid h-16 grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]"
     >
       <!-- Left: Logo -->
       <div class="flex items-center justify-self-start">
-        <a href="/" aria-label="Home" class="group">
+        <a
+          href="#hero-section"
+          aria-label="Back to hero section"
+          class="brand-link group"
+        >
           <span class="brand-logo" aria-hidden="true"></span>
         </a>
       </div>
@@ -44,13 +46,51 @@ import ContactButton from "./ContactButton";
 </header>
 
 <style>
+  .site-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.45);
+    background: rgba(223, 226, 227, 0.82);
+    box-shadow: 0 8px 30px rgba(26, 42, 74, 0.06);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    transform: translateY(0);
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+    will-change: transform;
+  }
+
+  :global(.dark) .site-header {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+    background: rgba(10, 14, 23, 0.68);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .site-header[data-hidden="true"] {
+    transform: translateY(calc(-100% - 1px));
+  }
+
   .brand-logo {
     display: block;
     width: 6.4rem;
     height: 2rem;
     background-color: #2a52cc;
     mask: url("/assets/logowide.svg") center / contain no-repeat;
-    transition: opacity 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .brand-link:focus-visible {
+    outline: 2px solid #5a8eff;
+    outline-offset: 2px;
   }
 
   :global(.dark) .brand-logo {
@@ -58,6 +98,40 @@ import ContactButton from "./ContactButton";
   }
 
   .group:hover .brand-logo {
-    opacity: 0.8;
+    background-color: #454c56;
+  }
+
+  :global(.dark) .group:hover .brand-logo {
+    background-color: #ffffff;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header {
+      transition: none;
+    }
   }
 </style>
+
+<script is:inline>
+  const header = document.querySelector("[data-site-header]");
+
+  if (header) {
+    header.dataset.hidden = "false";
+    let previousY = window.scrollY;
+
+    const updateHeader = () => {
+      const currentY = window.scrollY;
+      const delta = currentY - previousY;
+
+      if (currentY <= 80 || delta < -1) {
+        header.dataset.hidden = "false";
+      } else if (delta > 1) {
+        header.dataset.hidden = "true";
+      }
+
+      previousY = currentY;
+    };
+
+    window.addEventListener("scroll", updateHeader, { passive: true });
+  }
+</script>

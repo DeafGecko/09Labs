@@ -1,0 +1,413 @@
+---
+export interface ExperienceItem {
+  period: string;
+  role: string;
+  company: string;
+  location?: string;
+  summary: string;
+  achievement?: string;
+  skills?: string[];
+}
+
+export interface Props {
+  heading?: string;
+  experiences?: ExperienceItem[];
+}
+
+const {
+  heading = "Experience",
+  experiences = [
+    {
+      period: "2016 — Present",
+      role: "Media Director",
+      company: "Deaf Pathway Global",
+      location: "Brentwood, TN",
+      summary:
+        "Leading media and creative direction for a Deaf-serving organization since 2016. Over time, the role grew into web development — building and maintaining websites, and collaborating with app developers on digital tools for the organization, including DPG Training Camp, a training platform currently in development as an installable, offline-capable app.",
+      achievement:
+        "Took on web development beyond the original role, giving the organization an in-house resource for its digital tools instead of relying solely on outside developers.",
+      skills: ["Media Direction", "Web Development", "Cross-functional Collaboration", "Accessibility"],
+    },
+    {
+      period: "2022 — Present",
+      role: "Frontend Engineer & Design Engineer",
+      company: "Independent",
+      location: "Remote",
+      summary:
+        "Self-directed frontend engineering work, building full-stack web applications end to end — from design systems to production deployment. Projects span booking platforms, e-commerce, developer tools, and accessibility-focused apps, built with React, Astro, Next.js, and Cloudflare's edge network.",
+      achievement:
+        "Shipped multiple full-stack apps solo, end to end — design system through deployment — sharpening a fast, systems-first way of working.",
+      skills: ["Component Architecture", "Design Systems", "Accessibility", "Full-Stack Development"],
+    },
+  ],
+} = Astro.props;
+---
+
+<section
+  class="experience"
+  id="experience-section"
+  aria-labelledby="experience-title"
+>
+  <header class="experience-header">
+    <h2 class="experience-title" id="experience-title">{heading}</h2>
+  </header>
+
+  <ol class="experience-list">
+    {
+      experiences.map((item, index) => (
+        <li class="experience-item" tabindex="0">
+          <div class="experience-time">
+            <span class="experience-phase">
+              PHASE {String(index + 1).padStart(2, "0")}
+            </span>
+            <p class="experience-period">{item.period}</p>
+            <span class="experience-marker" aria-hidden="true" />
+          </div>
+          <div class="experience-details">
+            <div class="experience-role-row">
+              <h3>{item.role}</h3>
+              <p>
+                {item.company}
+                {item.location && <span> · {item.location}</span>}
+              </p>
+            </div>
+            <p class="experience-summary">{item.summary}</p>
+            {item.achievement && (
+              <p class="experience-achievement">
+                <span aria-hidden="true">RESULT / </span>
+                {item.achievement}
+              </p>
+            )}
+            {item.skills && item.skills.length > 0 && (
+              <ul class="experience-skills" aria-label={`${item.role} skills`}>
+                {item.skills.map((skill) => (
+                  <li>{skill}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .experience {
+    width: 100%;
+    padding: calc(1.75rem + 10px) 6% 7rem;
+    color: #454c56;
+    background: #dfe2e3;
+    transition: background 0.3s ease;
+  }
+
+  :global(.dark) .experience {
+    color: #eef4ff;
+    background: #0a0e17;
+  }
+
+  .experience-header {
+    margin-bottom: 2.75rem;
+  }
+
+  .experience-kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.9rem;
+    color: #2a52cc;
+    font:
+      600 0.78rem/1.5 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  :global(.dark) .experience-kicker {
+    color: #6a9eff;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    background: currentColor;
+  }
+
+  .experience-title {
+    font-family: "DM Sans", sans-serif;
+    margin: 0;
+    font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .experience-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid #929ba2;
+  }
+
+  :global(.dark) .experience-list {
+    border-color: rgba(106, 158, 255, 0.28);
+  }
+
+  .experience-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.35fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    padding: 2rem 0;
+    border-bottom: 1px solid #929ba2;
+    outline: none;
+    transition:
+      opacity 0.25s ease,
+      padding 0.3s ease,
+      background-color 0.25s ease;
+  }
+
+  .experience-item::after {
+    content: "";
+    position: absolute;
+    top: 3.45rem;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #006bff;
+    box-shadow: 0 0 10px rgba(0, 107, 255, 0.35);
+    transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  :global(.dark) .experience-item::after {
+    background: #6a9eff;
+    box-shadow: 0 0 10px rgba(106, 158, 255, 0.3);
+  }
+
+  .experience-list:has(.experience-item:hover) .experience-item:not(:hover),
+  .experience-list:has(.experience-item:focus-visible)
+    .experience-item:not(:focus-visible) {
+    opacity: 0.58;
+  }
+
+  .experience-item:hover::after,
+  .experience-item:focus-visible::after {
+    width: min(32%, 15rem);
+  }
+
+  .experience-item:focus-visible {
+    outline: 2px solid #2a52cc;
+    outline-offset: 4px;
+  }
+
+  .experience-time {
+    position: relative;
+  }
+
+  .experience-phase {
+    display: block;
+    margin-bottom: 0.45rem;
+    color: #565d66;
+    font:
+      600 0.68rem/1.3 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.6px;
+  }
+
+  :global(.dark) .experience-phase {
+    color: #7f91aa;
+  }
+
+  .experience-marker {
+    position: absolute;
+    top: 2.9rem;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background: #dfe2e3;
+    border: 1px solid #2a52cc;
+    border-radius: 2px;
+    transition:
+      background-color 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  :global(.dark) .experience-marker {
+    background: #0a0e17;
+    border-color: #6a9eff;
+  }
+
+  .experience-item:hover .experience-marker,
+  .experience-item:focus-visible .experience-marker {
+    background: #006bff;
+    box-shadow: 0 0 0 4px rgba(0, 107, 255, 0.14);
+    transform: scale(1.15);
+  }
+
+  :global(.dark) .experience-item:hover .experience-marker,
+  :global(.dark) .experience-item:focus-visible .experience-marker {
+    background: #6a9eff;
+  }
+
+  :global(.dark) .experience-item {
+    border-color: rgba(106, 158, 255, 0.28);
+  }
+
+  .experience-period {
+    margin: 0;
+    color: #20469f;
+    font:
+      600 0.78rem/1.5 "Azeret Mono",
+      monospace;
+  }
+
+  :global(.dark) .experience-period {
+    color: #8aacdf;
+  }
+
+  .experience-role-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .experience-role-row h3 {
+    font-family: "DM Sans", sans-serif;
+    margin: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.2;
+  }
+
+  .experience-role-row p {
+    margin: 0;
+    color: #4a5059;
+    font:
+      600 0.82rem/1.5 "Azeret Mono",
+      monospace;
+    text-align: right;
+  }
+
+  :global(.dark) .experience-role-row p {
+    color: #a8b8cf;
+  }
+
+  .experience-summary {
+    max-width: 65ch;
+    margin: 0.85rem 0 0;
+    color: #4a5059;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.7;
+  }
+
+  :global(.dark) .experience-summary {
+    color: #b9c7da;
+  }
+
+  .experience-achievement {
+    max-width: 65ch;
+    max-height: 0;
+    margin: 0;
+    overflow: hidden;
+    color: #20469f;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.55;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      max-height 0.35s ease,
+      margin 0.35s ease,
+      opacity 0.25s ease,
+      transform 0.35s ease;
+  }
+
+  .experience-achievement span {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.72rem;
+  }
+
+  :global(.dark) .experience-achievement {
+    color: #8aacdf;
+  }
+
+  .experience-item:hover .experience-achievement,
+  .experience-item:focus-visible .experience-achievement {
+    max-height: 6rem;
+    margin-top: 0.8rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .experience-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .experience-skills li {
+    padding: 0.35rem 0.6rem;
+    color: #173f9f;
+    border: 1px solid rgba(42, 82, 204, 0.35);
+    border-radius: 4px;
+    font:
+      600 0.72rem/1.2 "Azeret Mono",
+      monospace;
+  }
+
+  :global(.dark) .experience-skills li {
+    color: #8aacdf;
+    border-color: rgba(106, 158, 255, 0.3);
+  }
+
+  @media (max-width: 860px) {
+    .experience {
+      padding: calc(1.25rem + 10px) 1.4rem 5rem;
+    }
+
+    .experience-item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .experience-item::after {
+      top: 4.8rem;
+    }
+
+    .experience-marker {
+      top: 4.25rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .experience-role-row {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .experience-role-row p {
+      text-align: left;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .experience-item,
+    .experience-item::after,
+    .experience-marker,
+    .experience-achievement {
+      transition: none;
+    }
+  }
+</style>

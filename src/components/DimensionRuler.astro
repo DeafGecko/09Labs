@@ -1,0 +1,81 @@
+---
+export interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="dimension-ruler" aria-hidden="true">
+  <svg viewBox="0 0 1200 34" preserveAspectRatio="none">
+    <path class="dimension-line" d="M22 17H1178"></path>
+    <path class="dimension-arrow" d="M22 17l12-6v12zM1178 17l-12-6v12z"></path>
+    {
+      Array.from({ length: 13 }, (_, index) => {
+        const x = 22 + index * (1156 / 12);
+        const height = index % 3 === 0 ? 12 : 7;
+        return (
+          <path
+            class="dimension-tick"
+            d={`M${x} ${17 - height / 2}V${17 + height / 2}`}
+          />
+        );
+      })
+    }
+  </svg>
+  <span>{label}</span>
+</div>
+
+<style>
+  .dimension-ruler {
+    position: relative;
+    z-index: 4;
+    height: 34px;
+    margin: -17px clamp(18px, 3.5vmin, 32px);
+    color: rgba(42, 82, 204, 0.32);
+    pointer-events: none;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .dimension-line,
+  .dimension-tick {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .dimension-arrow {
+    fill: currentColor;
+  }
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0 0.65rem;
+    color: #20469f;
+    background: #dfe2e3;
+    font:
+      600 0.62rem/1.4 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transform: translate(-50%, -50%);
+  }
+
+  :global(.dark) .dimension-ruler {
+    color: rgba(106, 158, 255, 0.25);
+  }
+
+  :global(.dark) span {
+    color: #6a9eff;
+    background: #0a0e17;
+  }
+</style>

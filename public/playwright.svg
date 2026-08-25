@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Playwright">
+  <path d="M10 25 48 16v34c0 22-13 34-28 37C12 77 8 64 10 25Z" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-width="6"/>
+  <path d="M42 20 90 28c2 39-12 55-31 59-13-7-20-18-22-34" fill="none" stroke="#ffffff" stroke-linejoin="round" stroke-width="6"/>
+  <path d="M19 43c5-4 10-4 15 0M55 45c5-4 10-3 14 1M76 47c4-3 7-2 10 1M52 66c8 8 18 9 27 2" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="5"/>
+</svg>

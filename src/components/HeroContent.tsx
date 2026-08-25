@@ -1,8 +1,10 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, Mail } from "lucide-react";
 
 interface Props {
   title: string;
   subtitle: string;
+  summary: string;
   primaryButtonText: string;
   secondaryButtonText: string;
 }
@@ -38,6 +40,7 @@ const stillFade = { hidden: { opacity: 1 }, show: { opacity: 1 } };
 export default function HeroContent({
   title,
   subtitle,
+  summary,
   primaryButtonText,
   secondaryButtonText,
 }: Props) {
@@ -51,24 +54,29 @@ export default function HeroContent({
       animate="show"
     >
       <motion.p className="hero-name" variants={reduced ? stillVisible : fadeUp}>
-        Dwight Rogers · Design engineering
+        <span className="hero-name-dot" aria-hidden="true" />
+        DWIGHT ROGERS · Product Engineer
       </motion.p>
 
       <motion.h1 className="hero-title" variants={reduced ? stillVisible : fadeUp}>
         {title}
         <br />
-        <span className="accent">{subtitle}</span>
+        <span className="accent" aria-label={subtitle}>
+          {Array.from(subtitle).map((letter, index) => (
+            <span className="accent-letter" aria-hidden="true" key={`${letter}-${index}`}>
+              {letter === " " ? "\u00a0" : letter}
+            </span>
+          ))}
+        </span>
       </motion.h1>
 
       <motion.p className="hero-sub" variants={reduced ? stillVisible : fadeUp}>
-        :: astro · typescript · framer-motion
-        <br />
-        tolerance ±0.001 · ISO 2768
+        {summary}
       </motion.p>
 
       <motion.div className="hero-actions" variants={reduced ? stillFade : fadeIn}>
-        <motion.button
-          type="button"
+        <motion.a
+          href="#works-section"
           aria-label={`${primaryButtonText} — view portfolio`}
           className="btn-primary"
           whileHover={reduced ? {} : {
@@ -77,11 +85,12 @@ export default function HeroContent({
           whileTap={reduced ? {} : { y: 0, scale: 0.98 }}
           transition={{ duration: 0.18 }}
         >
+          <ArrowDownRight size={18} strokeWidth={1.8} aria-hidden="true" />
           {primaryButtonText}
-        </motion.button>
+        </motion.a>
 
-        <motion.button
-          type="button"
+        <motion.a
+          href="#contact-section"
           aria-label={`${secondaryButtonText} — get in touch`}
           className="btn-ghost"
           whileHover={reduced ? {} : {
@@ -90,8 +99,9 @@ export default function HeroContent({
           whileTap={reduced ? {} : { y: 0, scale: 0.98 }}
           transition={{ duration: 0.18 }}
         >
+          <Mail size={18} strokeWidth={1.8} aria-hidden="true" />
           {secondaryButtonText}
-        </motion.button>
+        </motion.a>
       </motion.div>
     </motion.div>
   );

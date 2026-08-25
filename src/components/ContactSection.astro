@@ -1,0 +1,460 @@
+---
+import { ArrowUpRight, Copy, Download, Mail, Send } from "lucide-react";
+
+export interface Props {
+  email?: string;
+  name?: string;
+  role?: string;
+  location?: string;
+}
+
+const {
+  email = "dwirog@gmail.com",
+  name = "Dwight Rogers",
+  role = "Frontend & Design Engineer",
+  location = "Available remotely",
+} = Astro.props;
+
+const vCard = [
+  "BEGIN:VCARD",
+  "VERSION:3.0",
+  `FN:${name}`,
+  `TITLE:${role}`,
+  `EMAIL;TYPE=INTERNET,WORK:${email}`,
+  "URL:https://09labs.dev",
+  "END:VCARD",
+].join("\r\n");
+const vCardHref = `data:text/vcard;charset=utf-8,${encodeURIComponent(vCard)}`;
+---
+
+<section class="contact" id="contact-section" aria-labelledby="contact-title">
+  <header class="contact-header">
+    <h2 class="contact-title" id="contact-title">
+      Let&apos;s make something useful.
+    </h2>
+    <p class="contact-intro">
+      Have a product, interface, or design system that needs clear thinking and
+      careful execution? Send the essentials and start the conversation.
+    </p>
+  </header>
+
+  <div class="contact-layout">
+    <div class="contact-details">
+      <p class="detail-label">DIRECT CHANNEL</p>
+      <a class="email-link" href={`mailto:${email}`}>
+        <Mail size={20} strokeWidth={1.8} aria-hidden="true" />
+        <span>{email}</span>
+        <ArrowUpRight size={18} strokeWidth={1.8} aria-hidden="true" />
+      </a>
+
+      <div class="contact-actions">
+        <button class="utility-action" type="button" data-copy-email={email}>
+          <Copy size={16} strokeWidth={1.8} aria-hidden="true" />
+          Copy email
+        </button>
+        <a
+          class="utility-action"
+          href={vCardHref}
+          download="dwight-rogers.vcf"
+          aria-label={`Add ${name} to contacts`}
+        >
+          <Download size={16} strokeWidth={1.8} aria-hidden="true" />
+          Add to contacts
+        </a>
+      </div>
+      <p class="copy-status" aria-live="polite" data-copy-status></p>
+
+      <dl class="availability">
+        <div>
+          <dt>ROLE</dt>
+          <dd>{role}</dd>
+        </div>
+        <div>
+          <dt>LOCATION</dt>
+          <dd>{location}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <form class="contact-form" data-contact-form data-recipient={email}>
+      <div class="field-row">
+        <label>
+          <span>Name</span>
+          <input name="name" type="text" autocomplete="name" required />
+        </label>
+        <label>
+          <span>Email</span>
+          <input name="email" type="email" autocomplete="email" required />
+        </label>
+      </div>
+      <label>
+        <span>Subject</span>
+        <input name="subject" type="text" required />
+      </label>
+      <label>
+        <span>Message</span>
+        <textarea name="message" rows="5" required></textarea>
+      </label>
+      <button class="send-button" type="submit">
+        <Send size={18} strokeWidth={1.8} aria-hidden="true" />
+        Compose email
+      </button>
+      <p class="form-note">
+        Opens your default email application. Nothing is stored.
+      </p>
+    </form>
+  </div>
+</section>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .contact {
+    width: 100%;
+    padding: calc(1.75rem + 10px) 6% 3rem;
+    color: #343b45;
+    background: #b4bbc0;
+  }
+
+  :global(.dark) .contact {
+    color: #eef4ff;
+    background: #12161f;
+  }
+
+  .contact-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.55fr);
+    column-gap: clamp(2rem, 8vw, 8rem);
+    align-items: end;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #929ba2;
+  }
+
+  :global(.dark) .contact-header {
+    border-color: rgba(106, 158, 255, 0.28);
+  }
+
+  .contact-kicker {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 1rem;
+    color: #20469f;
+    font:
+      600 0.78rem/1.5 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.6px;
+  }
+
+  :global(.dark) .contact-kicker {
+    color: #6a9eff;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    background: currentColor;
+  }
+
+  .contact-title {
+    font-family: "DM Sans", sans-serif;
+    max-width: 13ch;
+    margin: 0;
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 0.96;
+  }
+
+  .contact-intro {
+    max-width: 48ch;
+    margin: 0 0 0.35rem;
+    color: #4a5059;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.75;
+  }
+
+  :global(.dark) .contact-intro {
+    color: #b9c7da;
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(2rem, 8vw, 7rem);
+    padding: 2rem 0;
+  }
+
+  .detail-label,
+  .availability dt,
+  .contact-form label > span,
+  .form-note {
+    color: #46516b;
+    font:
+      600 0.72rem/1.4 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  :global(.dark) .detail-label,
+  :global(.dark) .availability dt,
+  :global(.dark) .contact-form label > span,
+  :global(.dark) .form-note {
+    color: #8aacdf;
+  }
+
+  .detail-label {
+    margin: 0 0 1rem;
+  }
+
+  .email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: inherit;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .email-link:hover {
+    color: #20469f;
+  }
+
+  :global(.dark) .email-link:hover {
+    color: #6a9eff;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.5rem;
+  }
+
+  .utility-action,
+  .send-button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    color: #173f9f;
+    background: transparent;
+    border: 1px solid #526a9c;
+    border-radius: 4px;
+    cursor: pointer;
+    font:
+      600 0.76rem/1 "Azeret Mono",
+      monospace;
+    text-decoration: none;
+  }
+
+  :global(.dark) .utility-action {
+    color: #d6e6ff;
+    border-color: rgba(106, 158, 255, 0.5);
+  }
+
+  .utility-action:hover {
+    color: #fff;
+    background: #20469f;
+    border-color: #20469f;
+  }
+
+  .copy-status {
+    min-height: 1.4rem;
+    margin: 0.55rem 0 0;
+    color: #20469f;
+    font:
+      600 0.7rem/1.4 "Azeret Mono",
+      monospace;
+  }
+
+  :global(.dark) .copy-status {
+    color: #8aacdf;
+  }
+
+  .availability {
+    display: grid;
+    gap: 1rem;
+    margin: 1.75rem 0 0;
+  }
+
+  .availability div {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 1rem;
+  }
+
+  .availability dt,
+  .availability dd {
+    margin: 0;
+  }
+
+  .availability dd {
+    color: #4a5059;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  :global(.dark) .availability dd {
+    color: #b9c7da;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .contact-form label {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 0.8rem 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #7f888f;
+    border-radius: 0;
+    font: 500 1rem/1.5 inherit;
+  }
+
+  :global(.dark) .contact-form input,
+  :global(.dark) .contact-form textarea {
+    border-color: rgba(106, 158, 255, 0.4);
+  }
+
+  .contact-form textarea {
+    min-height: 6rem;
+    resize: vertical;
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: #20469f;
+    outline: 0;
+    box-shadow: 0 2px 0 #20469f;
+  }
+
+  :global(.dark) .contact-form input:focus,
+  :global(.dark) .contact-form textarea:focus {
+    border-color: #6a9eff;
+    box-shadow: 0 2px 0 #6a9eff;
+  }
+
+  .send-button {
+    width: fit-content;
+    min-width: 11rem;
+    color: #fff;
+    background: #20469f;
+    border-color: #20469f;
+  }
+
+  :global(.dark) .send-button {
+    color: #08101f;
+    background: #6a9eff;
+    border-color: #6a9eff;
+  }
+
+  .send-button:hover {
+    background: #17377e;
+  }
+
+  :global(.dark) .send-button:hover {
+    background: #8ab1ff;
+  }
+
+  .form-note {
+    margin: -0.7rem 0 0;
+    text-transform: none;
+  }
+
+  @media (max-width: 700px) {
+    .contact {
+      padding: calc(1.25rem + 10px) 1.4rem 2rem;
+    }
+
+    .contact-header,
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-intro {
+      margin-top: 1.5rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .field-row {
+      grid-template-columns: 1fr;
+    }
+
+    .email-link {
+      max-width: 100%;
+    }
+
+    .email-link span {
+      overflow-wrap: anywhere;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initContactSection() {
+      const form = document.querySelector("[data-contact-form]");
+      if (!form || form.dataset.wired === "true") return;
+      form.dataset.wired = "true";
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const data = new FormData(form);
+        const recipient = form.dataset.recipient;
+        const subject = data.get("subject")?.toString() || "Project inquiry";
+        const message = data.get("message")?.toString() || "";
+        const senderName = data.get("name")?.toString() || "";
+        const senderEmail = data.get("email")?.toString() || "";
+        const body = `${message}\n\nFrom: ${senderName}\nEmail: ${senderEmail}`;
+
+        location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      });
+
+      const copyButton = document.querySelector("[data-copy-email]");
+      const copyStatus = document.querySelector("[data-copy-status]");
+      copyButton?.addEventListener("click", async () => {
+        const email = copyButton.dataset.copyEmail;
+        if (!email) return;
+
+        try {
+          await navigator.clipboard.writeText(email);
+          copyStatus.textContent = "Email copied.";
+        } catch {
+          copyStatus.textContent = email;
+        }
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initContactSection);
+    } else {
+      initContactSection();
+    }
+  })();
+</script>

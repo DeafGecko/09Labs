@@ -3,7 +3,7 @@ import { Sun, Moon } from 'lucide-react';
 
 const ThemeToggle = () => {
       const [mounted, setMounted] = useState(false);
-      const [theme, setTheme] = useState<'light' | 'dark'>('light');
+      const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
 // Only run on client after mount
             useEffect(() => {
@@ -12,7 +12,7 @@ const ThemeToggle = () => {
 // Read from localStorage and DOM
             const stored = localStorage.getItem('09labs-theme');
             const isDark = document.documentElement.classList.contains('dark');
-            const initial = stored === 'dark' || (isDark && !stored) ? 'dark' : 'light';
+            const initial = stored === 'light' ? 'light' : isDark || !stored ? 'dark' : 'light';
             setTheme(initial);
       }, []);
 
@@ -22,7 +22,7 @@ const ThemeToggle = () => {
       document.documentElement.classList.toggle('dark', next === 'dark');
       localStorage.setItem('09labs-theme', next);
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', next === 'dark' ? '#0a0a0a' : '#ffffff');
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#0a0a0a' : '#dfe2e3');
       };
 
 // During SSR or before mount, render a placeholder (no mismatch)
@@ -33,9 +33,9 @@ const ThemeToggle = () => {
             aria-label="Loading theme toggle"
             className="
             relative inline-flex h-10 w-10 items-center justify-center
-            rounded-lg border border-[#d6d0c8] dark:border-[#1f2937]
-            bg-[#ece9e4] dark:bg-[#0f1520]
-            text-[#1a1a1a] dark:text-[#eef4ff]
+            rounded-[4px] border border-[#d6d0c8] dark:border-[#1f2937]
+            bg-[#d2d6d8] dark:bg-[#0f1520]
+            text-[#4a5059] dark:text-[#eef4ff]
             transition-colors duration-200
             "
             >
@@ -53,10 +53,10 @@ const ThemeToggle = () => {
             onClick={toggle}
             className="
                   relative inline-flex h-10 w-10 items-center justify-center
-                  rounded-lg border border-[#d6d0c8] dark:border-[#1f2937]
-                  bg-[#ece9e4] dark:bg-[#0f1520]
-                  text-[#1a1a1a] dark:text-[#eef4ff]
-                  hover:bg-[#e0dbd4] dark:hover:bg-[#161d2b]
+                  rounded-[4px] border border-[#d6d0c8] dark:border-[#1f2937]
+                  bg-[#d2d6d8] dark:bg-[#0f1520]
+                  text-[#4a5059] dark:text-[#eef4ff]
+                  hover:bg-[#c5cacc] dark:hover:bg-[#161d2b]
                   focus-visible:ring-2 focus-visible:ring-[#5a8eff] focus:outline-none
                   transition-colors duration-200
                   "

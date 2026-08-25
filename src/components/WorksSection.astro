@@ -1,0 +1,1255 @@
+---
+import { FileSearch } from "lucide-react";
+
+export interface WorkItem {
+  eyebrow: string;
+  title: string[];
+  category: string;
+  summary?: string;
+  tags?: string[];
+  caseStudyUrl?: string;
+  githubUrl?: string;
+  websiteUrl?: string;
+  /** optional real screenshot — falls back to a generated pattern */
+  image?: string;
+}
+
+export interface Props {
+  heading?: string;
+  hint?: string;
+  works?: WorkItem[];
+}
+
+const {
+  heading = "SELECTED WORKS",
+  hint = "Hover or tap vertical slices to expand project architecture & technical specs.",
+  works = [
+    {
+      eyebrow: "VENUE OPERATIONS PLATFORM",
+      title: ["THE FACTORY"],
+      category: "factory",
+      summary:
+        "A full booking and admin platform for venues — calendar, dashboard, role-based access, and CMS-driven theming. Currently in active development.",
+      tags: ["Astro", "React", "Tailwind", "Sanity", "Cloudflare"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+    {
+      eyebrow: "DESIGN TOKEN & CONTRAST ENGINE",
+      title: ["CHROMATIQUE", "STUDIO"],
+      category: "chromatique",
+      summary:
+        "A design token and contrast auditing tool — real-time accessibility checks, live component preview, and one-click CSS variable export.",
+      tags: ["Vue 3", "Vite", "Tailwind", "VueUse"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+    {
+      eyebrow: "MINIMALIST WRITING APP",
+      title: ["KANSO"],
+      category: "kanso",
+      summary:
+        "A distraction-free writing app inspired by Japanese simplicity — theme and font controls, word/paragraph limits, local file save.",
+      tags: ["React", "Tailwind"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+    {
+      eyebrow: "STOREFRONT & CHECKOUT",
+      title: ["SWISS E-COMMERCE"],
+      category: "swiss",
+      summary:
+        "A responsive storefront with product filtering, cart, wishlist, and a mock checkout — built around Swiss design principles.",
+      tags: ["React", "Tailwind", "Vercel"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+    {
+      eyebrow: "COMMUNICATION AID",
+      title: ["CLEARCARD"],
+      category: "clearcard",
+      summary:
+        "A card-based communication app built for the Deaf and Hard of Hearing community — fast, visual, and accessible by design.",
+      tags: ["React", "PWA", "A11y"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+    {
+      eyebrow: "COMPONENT LIBRARY & DESIGN SYSTEM",
+      title: ["09 FOLIO"],
+      category: "folio",
+      summary:
+        "A neo-brutalist component library and token system — proving the bridge between design background and production engineering.",
+      tags: ["React", "TypeScript", "Storybook"],
+      caseStudyUrl: "https://09labs.studio",
+      githubUrl: "https://github.com/DeafGecko",
+      websiteUrl: "https://09labs.studio",
+    },
+  ],
+} = Astro.props;
+---
+
+<section class="works" id="works-section" aria-label="Selected work">
+  <div class="works-header">
+    <div class="works-heading-block">
+      <h2 class="works-title">{heading}</h2>
+    </div>
+    <p class="works-hint">{hint}</p>
+  </div>
+
+  <div class="works-accordion" id="worksAccordion" role="list">
+    {
+      works.map((work, i) => (
+        <article
+          class="slice"
+          class:list={[{ "is-active": i === 0 }]}
+          data-index={i}
+          role="listitem"
+          tabindex="0"
+          aria-expanded={i === 0 ? "true" : "false"}
+        >
+          <div
+            class={`slice-bg pattern-${work.category}`}
+            style={work.image ? `background-image:url(${work.image})` : ""}
+          />
+          <div class="slice-overlay" />
+          <div class="slice-topline">
+            <span class="slice-number">{String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <div class="slice-vertical-label" aria-hidden="true">
+            <span class="slice-vertical-name">{work.title.join(" ")} · {String(i + 1).padStart(2, "0")}</span>
+          </div>
+          <div class="slice-content">
+            <p class="slice-eyebrow">{work.eyebrow}</p>
+            <h3 class="slice-title">
+              {work.title.map((line) => (
+                <>
+                  {line}
+                  <br />
+                </>
+              ))}
+            </h3>
+            {work.summary && (
+              <p class="slice-summary">{work.summary}</p>
+            )}
+            {work.tags && work.tags.length > 0 && (
+              <div class="slice-tags">
+                {work.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div class="slice-links">
+            {work.caseStudyUrl && (
+              <button
+                type="button"
+                class="project-link project-case-study"
+                data-case-study-trigger
+                data-title={work.title.join(" ")}
+                data-eyebrow={work.eyebrow}
+                data-summary={
+                  work.summary ??
+                  "Project case study details are being prepared."
+                }
+                data-tags={JSON.stringify(work.tags ?? [])}
+                data-github-url={work.githubUrl ?? ""}
+                data-website-url={work.websiteUrl ?? ""}
+                aria-label={`Open the ${work.title.join(" ")} case study`}
+              >
+                <FileSearch
+                  className="case-study-trigger-icon"
+                  size={15}
+                  strokeWidth={1.8}
+                  aria-hidden="true"
+                />
+                Case Study
+              </button>
+            )}
+            {work.githubUrl && (
+              <a
+                class="project-link"
+                href={work.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`View ${work.title.join(" ")} on GitHub`}
+                title="View GitHub repository"
+              >
+                <img
+                  class="project-link-icon"
+                  src="/github.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </a>
+            )}
+            {work.websiteUrl && (
+              <a
+                class="project-link"
+                href={work.websiteUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Visit ${work.title.join(" ")} website`}
+                title="Open live demo"
+              >
+                <img
+                  class="project-link-icon"
+                  src="/website-icon.svg"
+                  alt=""
+                  aria-hidden="true"
+                />
+              </a>
+            )}
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <dialog
+    class="case-study-modal"
+    id="caseStudyModal"
+    aria-labelledby="caseStudyTitle"
+  >
+    <div class="case-study-panel">
+      <button
+        class="case-study-close"
+        type="button"
+        data-case-study-close
+        aria-label="Close case study">×</button
+      >
+      <p class="case-study-kicker" id="caseStudyEyebrow"></p>
+      <h3 class="case-study-title" id="caseStudyTitle"></h3>
+      <p class="case-study-summary" id="caseStudySummary"></p>
+      <div
+        class="case-study-tags"
+        id="caseStudyTags"
+        aria-label="Technologies used"
+      >
+      </div>
+      <div class="case-study-actions">
+        <a
+          class="case-study-action"
+          id="caseStudyGithub"
+          target="_blank"
+          rel="noreferrer">GitHub</a
+        >
+        <a
+          class="case-study-action"
+          id="caseStudyWebsite"
+          target="_blank"
+          rel="noreferrer">Visit Website</a
+        >
+      </div>
+    </div>
+  </dialog>
+</section>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .works {
+    width: 100%;
+    padding: calc(1.75rem + 10px) 6% 7rem;
+    background: #dfe2e3;
+    transition: background 0.3s ease;
+  }
+
+  :global(.dark) .works {
+    background: #0a0e17;
+  }
+
+  .works-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.75rem;
+  }
+
+  .works-kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: #2a52cc;
+    text-transform: uppercase;
+    margin-bottom: 0.9rem;
+  }
+
+  :global(.dark) .works-kicker {
+    color: #6a9eff;
+  }
+
+  .works-kicker .dot {
+    width: 7px;
+    height: 7px;
+    background: #2a52cc;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  :global(.dark) .works-kicker .dot {
+    background: #6a9eff;
+  }
+
+  .works-title {
+    font-family: "DM Sans", sans-serif;
+    font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: #454c56;
+    margin: 0;
+  }
+
+  :global(.dark) .works-title {
+    color: #eef4ff;
+  }
+
+  .works-hint {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #20469f;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    max-width: 280px;
+    text-align: right;
+    margin: 0 0 0.35rem;
+  }
+
+  :global(.dark) .works-hint {
+    color: rgba(100, 170, 255, 0.7);
+  }
+
+  .works-accordion {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    height: min(60vh, 620px);
+    min-height: 380px;
+    border: 1px solid rgba(42, 82, 204, 0.15);
+    border-radius: 4px;
+    padding: 0.6rem;
+    gap: 0.6rem;
+    background: rgba(42, 82, 204, 0.02);
+    overflow: hidden;
+  }
+
+  :global(.dark) .works-accordion {
+    border-color: rgba(80, 150, 255, 0.15);
+    background: rgba(10, 14, 23, 0.4);
+  }
+
+  @property --work-border-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @keyframes work-border-travel {
+    to {
+      --work-border-angle: 360deg;
+    }
+  }
+
+  .slice {
+    position: relative;
+    flex: 1 1 0%;
+    min-width: 64px;
+    height: 100%;
+    border: 0;
+    border-radius: 4px;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    overflow: hidden;
+    background: #384351;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    transition: flex-grow 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  :global(.dark) .slice {
+    background: #12161f;
+  }
+
+  .slice::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    padding: 1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--work-border-angle),
+      rgba(42, 82, 204, 0.2),
+      #5a8eff,
+      rgba(42, 82, 204, 0.2) 35%,
+      rgba(42, 82, 204, 0.2) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .slice:hover::before,
+  .slice:focus-visible::before {
+    opacity: 1;
+    animation: work-border-travel 2.4s linear infinite;
+  }
+
+  .slice:focus-visible {
+    outline: 2px solid #6a9eff;
+    outline-offset: -2px;
+    z-index: 3;
+  }
+
+  .slice.is-active {
+    flex-grow: 8;
+  }
+
+  .slice-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: grayscale(1) contrast(1.15) brightness(0.55);
+    transform: scale(1.04);
+    transition:
+      filter 0.6s ease,
+      transform 0.6s ease;
+  }
+
+  .slice.is-active .slice-bg {
+    filter: grayscale(1) contrast(1.1) brightness(0.75);
+    transform: scale(1);
+  }
+
+  html:not(.dark) .slice-bg {
+    filter: grayscale(1) contrast(0.94) brightness(1.02);
+  }
+
+  html:not(.dark) .slice.is-active .slice-bg {
+    filter: grayscale(1) contrast(0.96) brightness(1.04);
+  }
+
+  /* generated circuit-like placeholder patterns — swap via the `image` prop */
+  .pattern-signalcard {
+    background-color: #23262f;
+    background-image:
+      radial-gradient(
+        circle at 20% 30%,
+        rgba(120, 150, 200, 0.35) 0,
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 75% 65%,
+        rgba(90, 130, 190, 0.3) 0,
+        transparent 40%
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px 26px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px 26px
+      );
+  }
+  .pattern-voltfund {
+    background-color: #1d222c;
+    background-image:
+      radial-gradient(
+        circle at 65% 20%,
+        rgba(130, 160, 210, 0.3) 0,
+        transparent 50%
+      ),
+      repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.035) 0 2px,
+        transparent 2px 22px
+      );
+  }
+  .pattern-kanso {
+    background-color: #191d25;
+    background-image: repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 34px
+    );
+  }
+  .pattern-factory {
+    background-color: #21242d;
+    background-image:
+      radial-gradient(
+        circle at 30% 70%,
+        rgba(140, 165, 205, 0.28) 0,
+        transparent 45%
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px 20px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px 20px
+      );
+  }
+  .pattern-storyone {
+    background-color: #1c2029;
+    background-image: radial-gradient(
+      circle at 50% 40%,
+      rgba(150, 175, 215, 0.3) 0,
+      transparent 55%
+    );
+  }
+  .pattern-sift {
+    background-color: #20232c;
+    background-image:
+      linear-gradient(180deg, rgba(150, 175, 215, 0.18) 0, transparent 60%),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.035) 0 1px,
+        transparent 1px 30px
+      );
+  }
+  .pattern-chromatique {
+    background-color: #1e1f2e;
+    background-image:
+      radial-gradient(
+        circle at 40% 30%,
+        rgba(160, 120, 220, 0.3) 0,
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 75% 70%,
+        rgba(90, 160, 220, 0.25) 0,
+        transparent 40%
+      ),
+      repeating-linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0.03) 0 1px,
+        transparent 1px 24px
+      );
+  }
+  .pattern-swiss {
+    background-color: #1d2028;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        rgba(255, 255, 255, 0.045) 0 1px,
+        transparent 1px 18px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.045) 0 1px,
+        transparent 1px 18px
+      );
+  }
+  .pattern-folio {
+    background-color: #1a1d26;
+    background-image:
+      radial-gradient(
+        circle at 60% 40%,
+        rgba(120, 160, 210, 0.32) 0,
+        transparent 50%
+      ),
+      repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.04) 0 2px,
+        transparent 2px 20px
+      );
+  }
+
+  .slice-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(10, 14, 23, 0.15) 0%,
+      rgba(10, 14, 23, 0.35) 55%,
+      rgba(10, 14, 23, 0.92) 100%
+    );
+  }
+
+  html:not(.dark) .slice-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(184, 191, 196, 0.08) 0%,
+      rgba(174, 182, 188, 0.34) 55%,
+      rgba(163, 172, 179, 0.94) 100%
+    );
+  }
+
+  html:not(.dark) .pattern-signalcard,
+  html:not(.dark) .pattern-kanso,
+  html:not(.dark) .pattern-storyone {
+    background-color: #b4bbc0;
+  }
+
+  html:not(.dark) .pattern-clearcard,
+  html:not(.dark) .pattern-factory,
+  html:not(.dark) .pattern-sift {
+    background-color: #aeb6bc;
+  }
+
+  .slice-topline {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    z-index: 2;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .slice.is-active .slice-topline {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slice-number {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6a9eff;
+    background: rgba(10, 14, 23, 0.6);
+    border: 1px solid rgba(106, 158, 255, 0.35);
+    border-radius: 4px;
+    padding: 0.3rem 0.55rem;
+    white-space: nowrap;
+  }
+
+  html:not(.dark) .slice-number {
+    color: #274fae;
+    background: rgba(223, 226, 227, 0.82);
+    border-color: rgba(42, 82, 204, 0.35);
+  }
+
+  .slice-badge {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.4px;
+    color: #d6e6ff;
+    background: rgba(10, 14, 23, 0.7);
+    border: 1px solid rgba(106, 158, 255, 0.25);
+    border-radius: 4px;
+    padding: 0.3rem 0.6rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .slice.is-active .slice-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slice-content {
+    position: absolute;
+    left: 1.1rem;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 2;
+    white-space: normal;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+  }
+
+  .slice.is-active .slice-content {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.3s ease 0.15s, visibility 0s linear 0.15s;
+  }
+
+  .slice-links {
+    position: absolute;
+    right: 1.1rem;
+    bottom: 1.1rem;
+    z-index: 3;
+    display: flex;
+    gap: 0.45rem;
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+    transition:
+      opacity 0.35s ease 0.1s,
+      transform 0.35s ease 0.1s;
+  }
+
+  .slice.is-active .slice-links {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .project-link {
+    position: relative;
+    display: inline-flex;
+    width: 2.25rem;
+    height: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    color: #d6e6ff;
+    background: rgba(10, 14, 23, 0.72);
+    border: 1px solid rgba(106, 158, 255, 0.35);
+    border-radius: 4px;
+    transition:
+      color 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .project-case-study {
+    width: auto;
+    gap: 0.65rem;
+    padding: 0 0.8rem;
+    cursor: pointer;
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  :global(.case-study-trigger-icon) {
+    flex: 0 0 auto;
+  }
+
+  .case-study-modal {
+    width: min(42rem, calc(100% - 2rem));
+    max-height: calc(100vh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    color: #343b45;
+    background: #dfe2e3;
+    border: 2px solid #2a52cc;
+    border-radius: 4px;
+    box-shadow: 0 24px 70px rgba(26, 42, 74, 0.22);
+  }
+
+  .case-study-modal::backdrop {
+    background: rgba(26, 31, 40, 0.65);
+    backdrop-filter: blur(5px);
+  }
+
+  :global(.dark) .case-study-modal {
+    color: #d6e6ff;
+    background: #12161f;
+    border-color: #5a8eff;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  }
+
+  .case-study-panel {
+    position: relative;
+    padding: clamp(1.5rem, 5vw, 3rem);
+  }
+
+  .case-study-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    color: #343b45;
+    background: transparent;
+    border: 1px solid #929ba2;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
+  :global(.dark) .case-study-close {
+    color: #eef4ff;
+    border-color: rgba(106, 158, 255, 0.4);
+  }
+
+  .case-study-close:hover {
+    border-color: #2a52cc;
+  }
+
+  .case-study-kicker {
+    margin: 0 3.5rem 0.75rem 0;
+    color: #20469f;
+    font:
+      600 0.78rem/1.5 "Azeret Mono",
+      monospace;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+
+  :global(.dark) .case-study-kicker {
+    color: #6a9eff;
+  }
+
+  .case-study-title {
+    font-family: "DM Sans", sans-serif;
+    margin: 0 0 1.25rem;
+    font-size: clamp(2rem, 7vw, 3.5rem);
+    line-height: 1;
+  }
+
+  .case-study-summary {
+    max-width: 58ch;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.75;
+  }
+
+  .case-study-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .case-study-tag {
+    padding: 0.4rem 0.7rem;
+    color: #173f9f;
+    border: 1px solid rgba(42, 82, 204, 0.45);
+    border-radius: 4px;
+    font:
+      600 0.75rem/1.2 "Azeret Mono",
+      monospace;
+  }
+
+  :global(.dark) .case-study-tag {
+    color: #8aacdf;
+    border-color: rgba(106, 158, 255, 0.35);
+  }
+
+  .case-study-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .case-study-action {
+    padding: 0.75rem 1rem;
+    color: #173f9f;
+    border: 1px solid #2a52cc;
+    border-radius: 4px;
+    font:
+      600 0.78rem/1 "Azeret Mono",
+      monospace;
+    text-decoration: none;
+  }
+
+  :global(.dark) .case-study-action {
+    color: #d6e6ff;
+    border-color: #5a8eff;
+  }
+
+  .case-study-action:hover {
+    border-width: 2px;
+  }
+
+  .project-link::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: inherit;
+    background: conic-gradient(
+      from var(--work-border-angle),
+      rgba(42, 82, 204, 0.2),
+      #5a8eff,
+      rgba(42, 82, 204, 0.2) 35%,
+      rgba(42, 82, 204, 0.2) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .project-link:hover,
+  .project-link:focus-visible {
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  html:not(.dark) .project-link {
+    color: #343b45;
+    background: rgba(223, 226, 227, 0.82);
+    border-color: rgba(42, 82, 204, 0.35);
+  }
+
+  html:not(.dark) .project-link-icon {
+    filter: brightness(0) saturate(100%) invert(23%) sepia(9%) saturate(638%);
+  }
+
+  .project-link:hover::before,
+  .project-link:focus-visible::before {
+    opacity: 1;
+    animation: work-border-travel 2.4s linear infinite;
+  }
+
+  .project-link-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .project-link:focus-visible {
+    outline: 2px solid #6a9eff;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slice:hover::before,
+    .slice:focus-visible::before,
+    .project-link:hover::before,
+    .project-link:focus-visible::before {
+      animation: none;
+      background: #5a8eff;
+    }
+  }
+
+  .slice-eyebrow {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: rgba(214, 230, 255, 0.55);
+    margin: 0 0 0.35rem;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.4s ease 0.05s,
+      transform 0.4s ease 0.05s;
+    white-space: normal;
+  }
+
+  .slice-title {
+    font-family: "DM Sans", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #f4f7ff;
+    margin: 0;
+    white-space: normal;
+  }
+
+  html:not(.dark) .slice-title {
+    color: #343b45;
+  }
+
+  html:not(.dark) .slice-eyebrow {
+    color: #343b45;
+    font-weight: 600;
+  }
+
+  .slice-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(214, 230, 255, 0.15);
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      opacity 0.4s ease 0.1s,
+      max-height 0.4s ease;
+  }
+
+  .slice.is-active .slice-tags {
+    opacity: 1;
+    max-height: 3rem;
+  }
+
+  .slice.is-active .slice-eyebrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tag {
+    font-family: "Azeret Mono", monospace;
+    font-size: 0.75rem;
+    color: #8aacdf;
+    border: 1px solid rgba(80, 150, 255, 0.25);
+    border-radius: 4px;
+    padding: 0.3rem 0.65rem;
+    white-space: nowrap;
+  }
+
+  html:not(.dark) .slice-tags {
+    border-top-color: rgba(52, 59, 69, 0.18);
+  }
+
+  html:not(.dark) .tag {
+    color: #173f9f;
+    font-weight: 600;
+    border-color: rgba(42, 82, 204, 0.32);
+  }
+
+  /* vertical label shown only when collapsed */
+  .slice-vertical-label {
+    position: absolute;
+    bottom: 1.1rem;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.1s ease, visibility 0s linear 0.1s;
+  }
+
+  .slice.is-active .slice-vertical-label {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, visibility 0s linear 0.1s;
+  }
+
+  .slice-vertical-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #f4f7ff;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  html:not(.dark) .slice-vertical-name {
+    color: #343b45;
+  }
+
+  /* summary paragraph in expanded state */
+  .slice-summary {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(214, 230, 255, 0.75);
+    margin: 0.6rem 0 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.4s ease 0.1s,
+      transform 0.4s ease 0.1s;
+  }
+
+  html:not(.dark) .slice-summary {
+    color: rgba(52, 59, 69, 0.78);
+  }
+
+  .slice.is-active .slice-summary {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* collapsed-state label: rotated eyebrow only, no tags/badge */
+  .slice:not(.is-active) .slice-title {
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 860px) {
+    .works {
+      padding: calc(1.25rem + 10px) 1.4rem 4.5rem;
+    }
+    .works-header {
+      align-items: flex-start;
+    }
+    .works-hint {
+      text-align: left;
+      max-width: 100%;
+    }
+    .works-accordion {
+      flex-direction: column;
+      height: auto;
+      min-height: 0;
+      overflow-x: visible;
+    }
+    .slice {
+      flex: 0 0 64px;
+      width: 100%;
+      height: auto;
+      transition: flex-basis 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .slice.is-active {
+      flex: 0 0 min(70vh, 420px);
+    }
+    .slice-content {
+      white-space: normal;
+      right: 6.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slice,
+    .slice-bg,
+    .slice-badge,
+    .slice-eyebrow,
+    .slice-tags {
+      transition-duration: 0.01ms !important;
+    }
+    .slice-links {
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    function initWorksAccordion() {
+      const accordion = document.getElementById("worksAccordion");
+      if (!accordion || accordion.dataset.wired === "true") return;
+      accordion.dataset.wired = "true";
+
+      const slices = Array.from(accordion.querySelectorAll(".slice"));
+      const isCoarsePointer = window.matchMedia(
+        "(hover: none), (pointer: coarse)",
+      ).matches;
+
+      function activate(target) {
+        slices.forEach((slice) => {
+          const active = slice === target;
+          slice.classList.toggle("is-active", active);
+          slice.setAttribute("aria-expanded", active ? "true" : "false");
+        });
+      }
+
+      slices.forEach((slice) => {
+        slice.addEventListener("click", () => activate(slice));
+
+        slice.querySelectorAll(".project-link").forEach((link) => {
+          link.addEventListener("click", (event) => event.stopPropagation());
+        });
+
+        if (!isCoarsePointer) {
+          slice.addEventListener("mouseenter", () => activate(slice));
+        }
+
+        slice.addEventListener("keydown", (e) => {
+          const idx = slices.indexOf(slice);
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            e.preventDefault();
+            const next = slices[Math.min(idx + 1, slices.length - 1)];
+            next.focus();
+            activate(next);
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const prev = slices[Math.max(idx - 1, 0)];
+            prev.focus();
+            activate(prev);
+          } else if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            activate(slice);
+          }
+        });
+      });
+
+      accordion.addEventListener("mouseleave", () => {
+        if (!isCoarsePointer) {
+          const first = slices[0];
+          if (first) activate(first);
+        }
+      });
+
+      const modal = document.getElementById("caseStudyModal");
+      const closeButton = modal?.querySelector("[data-case-study-close]");
+      const title = document.getElementById("caseStudyTitle");
+      const eyebrow = document.getElementById("caseStudyEyebrow");
+      const summary = document.getElementById("caseStudySummary");
+      const tags = document.getElementById("caseStudyTags");
+      const github = document.getElementById("caseStudyGithub");
+      const website = document.getElementById("caseStudyWebsite");
+      let trigger = null;
+
+      function setModalLink(link, url) {
+        if (!link) return;
+        link.hidden = !url;
+        if (url) link.setAttribute("href", url);
+        else link.removeAttribute("href");
+      }
+
+      accordion
+        .querySelectorAll("[data-case-study-trigger]")
+        .forEach((button) => {
+          button.addEventListener("click", () => {
+            if (!modal) return;
+            trigger = button;
+            title.textContent = button.dataset.title;
+            eyebrow.textContent = button.dataset.eyebrow;
+            summary.textContent = button.dataset.summary;
+            tags.replaceChildren();
+
+            JSON.parse(button.dataset.tags || "[]").forEach((tag) => {
+              const item = document.createElement("span");
+              item.className = "case-study-tag";
+              item.textContent = tag;
+              tags.append(item);
+            });
+
+            setModalLink(github, button.dataset.githubUrl);
+            setModalLink(website, button.dataset.websiteUrl);
+            modal.showModal();
+            closeButton?.focus();
+          });
+        });
+
+      closeButton?.addEventListener("click", () => modal?.close());
+      modal?.addEventListener("click", (event) => {
+        if (event.target === modal) modal.close();
+      });
+      modal?.addEventListener("close", () => trigger?.focus());
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initWorksAccordion);
+    } else {
+      initWorksAccordion();
+    }
+  })();
+</script>
