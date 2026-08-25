@@ -4,10 +4,9 @@ import "../styles/global.css";
 
 export interface Props {
   title: string;
-  sandbox?: boolean;
   hideHeader?: boolean; // ← new prop
 }
-const { title, sandbox = false, hideHeader = false } = Astro.props;
+const { title, hideHeader = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -85,15 +84,6 @@ const { title, sandbox = false, hideHeader = false } = Astro.props;
 
     <!-- aria-live region for screen readers -->
     <div id="announcer" aria-live="polite" class="sr-only"></div>
-
-    <!-- SANDBOX RED BANNER (only when sandbox prop is true) -->
-    {
-      sandbox && (
-        <div class="bg-red-600 text-white text-center py-2 text-sm font-sans font-bold tracking-wider">
-          ⚠️ PREVIEW – Not yet merged
-        </div>
-      )
-    }
 
     <!-- Main Header (skip if hideHeader is true) -->
     {!hideHeader && <Header />}

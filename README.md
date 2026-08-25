@@ -25,22 +25,7 @@ Everything works on desktop, tablet, and phone.
 
 ## How I Build
 
-I use **two servers** at the same time.
-
-One server is for **preview** – I build new things there first and test them.
-
-The other server is for **final** – only approved things go there.
-
-| What | Port | URL |
-|------|------|-----|
-| Preview (testing) | 4323 | http://localhost:4323/sandbox |
-| Final (live site) | 4324 | http://localhost:4324 |
-
-When I preview something, I see a **red banner** at the top that says **"PREVIEW – Not yet merged"**.
-
-That tells me it's not on the live site yet.
-
-When I'm happy with it, I move it to the final site.
+Run `npm run dev` and open http://localhost:4324.
 
 ---
 
@@ -74,8 +59,7 @@ Here's the folder layout:
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
-│   │   ├── index.astro      # Homepage
-│   │   └── sandbox.astro    # Testing area
+│   │   └── index.astro      # Homepage
 │   └── styles/
 │       └── global.css
 ├── astro.config.mjs

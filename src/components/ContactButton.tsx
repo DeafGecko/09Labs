@@ -62,7 +62,7 @@ export default function ContactButton() {
       <a
         href="mailto:dwirog@gmail.com"
         aria-label="Contact"
-        className="contact-btn relative inline-flex items-center justify-center rounded-[4px] p-2 text-gray-700 dark:text-gray-300 transition-colors"
+        className="contact-btn relative inline-flex items-center justify-center rounded-sm p-2 text-gray-700 dark:text-gray-300 transition-colors"
       >
         <Mail className="h-5 w-5" aria-hidden="true" />
       </a>

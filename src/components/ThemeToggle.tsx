@@ -33,7 +33,7 @@ const ThemeToggle = () => {
             aria-label="Loading theme toggle"
             className="
             relative inline-flex h-10 w-10 items-center justify-center
-            rounded-[4px] border border-[#d6d0c8] dark:border-[#1f2937]
+            rounded-sm border border-[#d6d0c8] dark:border-[#1f2937]
             bg-[#d2d6d8] dark:bg-[#0f1520]
             text-[#4a5059] dark:text-[#eef4ff]
             transition-colors duration-200
@@ -53,7 +53,7 @@ const ThemeToggle = () => {
             onClick={toggle}
             className="
                   relative inline-flex h-10 w-10 items-center justify-center
-                  rounded-[4px] border border-[#d6d0c8] dark:border-[#1f2937]
+                  rounded-sm border border-[#d6d0c8] dark:border-[#1f2937]
                   bg-[#d2d6d8] dark:bg-[#0f1520]
                   text-[#4a5059] dark:text-[#eef4ff]
                   hover:bg-[#c5cacc] dark:hover:bg-[#161d2b]
